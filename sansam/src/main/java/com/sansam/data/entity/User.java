@@ -15,7 +15,7 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @Table(name = "USER")
-public class UserEntity implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_NO", nullable = false)
@@ -43,7 +43,7 @@ public class UserEntity implements UserDetails {
     private String userRefreshToken;
 
     @Builder
-    public UserEntity(int userNo, String userEmail, String userNicknm, int userAge, String userNm, String userGender, String userLocation, String userRefreshToken) {
+    public User(int userNo, String userEmail, String userNicknm, int userAge, String userNm, String userGender, String userLocation, String userRefreshToken) {
         this.userNo = userNo;
         this.userEmail = userEmail;
         this.userNicknm = userNicknm;

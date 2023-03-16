@@ -1,8 +1,8 @@
 package com.sansam.data.repository;
 
-import com.sansam.data.entity.UserEntity;
+import com.sansam.data.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<UserEntity, Integer> {
-    UserEntity findByUserEmail(String userEmail);
+public interface UserRepository extends JpaRepository<User, Integer> {
+    User findByUserEmail(String userEmail);
 }

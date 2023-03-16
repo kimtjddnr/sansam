@@ -1,6 +1,7 @@
 package com.sansam.config.jwt;
 
 import io.jsonwebtoken.*;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Key;
@@ -9,6 +10,7 @@ import java.util.Date;
 
 import static io.jsonwebtoken.security.Keys.secretKeyFor;
 
+@Component
 public class JwtProvider {
 
     // 랜덤 키 생성
@@ -16,6 +18,7 @@ public class JwtProvider {
 
     // access token 생성
     public String createAccessToken(String userEmail) {
+        System.out.println(userEmail+" received");
         Claims claims = Jwts.claims()
                 .setSubject("AccessToken")
                 .setIssuedAt(new Date())
