@@ -39,11 +39,8 @@ public class User implements UserDetails {
     @Column(name = "USER_LOCATION", nullable = false)
     private String userLocation;
 
-    @Column(name = "USER_REFRESH_TOKEN")
-    private String userRefreshToken;
-
     @Builder
-    public User(int userNo, String userEmail, String userNicknm, int userAge, String userNm, String userGender, String userLocation, String userRefreshToken) {
+    public User(int userNo, String userEmail, String userNicknm, int userAge, String userNm, String userGender, String userLocation) {
         this.userNo = userNo;
         this.userEmail = userEmail;
         this.userNicknm = userNicknm;
@@ -51,7 +48,6 @@ public class User implements UserDetails {
         this.userNm = userNm;
         this.userGender = userGender;
         this.userLocation = userLocation;
-        this.userRefreshToken = userRefreshToken;
     }
 
     @Override
