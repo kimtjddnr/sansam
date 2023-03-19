@@ -4,7 +4,7 @@ import CourseDetail from "./Pages/CourseDetail/CourseDetail";
 import Start from "./Pages/Start/Start";
 import Login from "./Pages/Login/Login";
 import SignUp1 from "./Pages/SignUp/SignUp1";
-import Test from "./Pages/SignUp/Test";
+import SignUp2 from "./Pages/SignUp2/SignUp2";
 import Main from "./Pages/Main/Main";
 import FilterMt from "./Pages/FilterMt/FilterMt";
 import FilterRg from "./Pages/FilterRg/FilterRg";
@@ -20,7 +20,7 @@ function App() {
         <Route path="/" element={<Start />} />
         <Route path="/login/*" element={<Login />} />
         <Route path="/signup/1" element={<SignUp1 />} />
-        <Route path="/signup/Test" element={<Test />} />
+        <Route path="/signup/2" element={<SignUp2 />} />
         <Route path="/main/*" element={<Main />} />
         <Route path="/filtermt/*" element={<FilterMt />} />
         <Route path="/filterrg/*" element={<FilterRg />} />
