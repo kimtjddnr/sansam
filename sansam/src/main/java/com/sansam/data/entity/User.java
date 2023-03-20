@@ -31,7 +31,7 @@ public class User {
     private String userNm;
 
     @Column(name = "USER_GENDER", nullable = false)
-    private String userGender;
+    private Character userGender;
 
     @Column(name = "USER_LOCATION", nullable = false)
     private String userLocation;
@@ -40,7 +40,7 @@ public class User {
     private Role userRole;
 
     @Builder
-    public User(int userNo, String userEmail, String userNicknm, int userAge, String userNm, String userGender, String userLocation, Role userRole) {
+    public User(int userNo, String userEmail, String userNicknm, int userAge, String userNm, Character userGender, String userLocation, Role userRole) {
         this.userNo = userNo;
         this.userEmail = userEmail;
         this.userNicknm = userNicknm;
