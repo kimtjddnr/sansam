@@ -1,9 +1,10 @@
 import Navbar from "../../Common/Navbar/Navbar";
+import {ButtonHTMLAttributes} from "react";
 
 function Main() {
-  return (
+  return ( 
     <div className="Main">
-      <Navbar />
+      <Navbar/>
       <h1>Main</h1>
     </div>
   );
