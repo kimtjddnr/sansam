@@ -37,8 +37,7 @@ public class OAuthAttributes {
             .userEmail(authUserInfo.getEmail())
             .userNicknm("temp")
             .userAge(0)
-            .userNm("temp")
-            .userGender("M")
+            .userGender('M')
             .userLocation("temp")
             .userRole(Role.USER)
             .build();

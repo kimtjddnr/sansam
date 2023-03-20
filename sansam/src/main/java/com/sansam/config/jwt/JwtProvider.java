@@ -18,7 +18,6 @@ public class JwtProvider {
 
     // access token 생성
     public String createAccessToken(String userEmail) {
-        System.out.println(userEmail+" received");
         Claims claims = Jwts.claims()
                 .setSubject("AccessToken")
                 .setIssuedAt(new Date())

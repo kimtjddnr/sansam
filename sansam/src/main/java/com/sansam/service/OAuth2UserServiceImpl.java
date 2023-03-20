@@ -19,7 +19,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class OAuth2UserServiceImpl implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-private final UserRepository userRepository;
+    private final UserRepository userRepository;
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
@@ -34,7 +34,7 @@ private final UserRepository userRepository;
 
         // DefaultOAuth2User를 구현한 AuthUser 객체를 생성해서 반환
         return new AuthUser(
-                Collections.singleton(new SimpleGrantedAuthority(createdUser.getUserRole().getRole())),
+                Collections.singleton(new SimpleGrantedAuthority("USER")),
                 attributes,
                 extractAttributes.getNameAttributeKey(),
                 createdUser.getUserRole(),
@@ -46,6 +46,7 @@ private final UserRepository userRepository;
         User findUser = userRepository.findByUserEmail(attributes.getAuthUserInfo().getEmail());
 
         if(findUser == null) {
+            System.out.println("entered OAuth2UserSErviceImpl@@@@");
             return saveUser(attributes);
         }
 
