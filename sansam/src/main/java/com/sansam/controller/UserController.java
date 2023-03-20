@@ -1,20 +1,21 @@
 package com.sansam.controller;
 
 import com.sansam.config.jwt.JwtProvider;
-import com.sansam.dto.request.LoginRequest;
+import com.sansam.dto.request.SignUpRequest;
+import com.sansam.service.UserServiceImpl;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@AllArgsConstructor
 public class UserController {
     private final JwtProvider jwtProvider;
 
-    public UserController(JwtProvider jwtProvider) {
-        this.jwtProvider = jwtProvider;
-    }
+    private final UserServiceImpl userService;
 
     @ApiOperation(
 			value = "카카오 인가코드 발송",
@@ -30,13 +31,24 @@ public class UserController {
         }
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        System.out.println("Entered login");
-        String userEmail = loginRequest.getUserEmail();
-        System.out.println(userEmail);
-        String accessToken = jwtProvider.createAccessToken(userEmail);
-        System.out.println(accessToken);
-        return new ResponseEntity<>("success", HttpStatus.OK);
+//    @PostMapping("/login")
+//    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+//        System.out.println("Entered login");
+//        String userEmail = loginRequest.getUserEmail();
+//        System.out.println(userEmail);
+//        String accessToken = jwtProvider.createAccessToken(userEmail);
+//        System.out.println(accessToken);
+//        return new ResponseEntity<>("success", HttpStatus.OK);
+//    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<?> signup(@RequestBody SignUpRequest signUpRequest) {
+        try {
+            userService.SignUp(signUpRequest);
+            return new ResponseEntity<>("Success", HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+        }
     }
 }

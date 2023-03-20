@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void SignUp(SignUpRequest signUpRequest) {
-        User user = new User();
+        User user = userRepository.findByUserNo(signUpRequest.getUserNo());
         user.setUserNicknm(signUpRequest.getUserNicknm());
         user.setUserAge(signUpRequest.getUserAge());
         user.setUserGender(signUpRequest.getUserGender());

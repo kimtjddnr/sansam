@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SignUpRequest {
+    private int userNo;
     private String userNicknm;
     private int userAge;
     private Character userGender;
