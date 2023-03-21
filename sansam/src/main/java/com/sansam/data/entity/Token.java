@@ -28,10 +28,20 @@ public class Token {
     private String tokenRefreshToken;
 
     @Builder
-    public Token(int tokenNo, int userNo, String userEmail, String tokenRefreshToken) {
+    public Token(int tokenNo, int userNo, String userEmail, String refreshToken) {
         this.tokenNo = tokenNo;
         this.userNo = userNo;
         this.userEmail = userEmail;
-        this.tokenRefreshToken = tokenRefreshToken;
+        this.tokenRefreshToken = refreshToken;
+    }
+
+    public void createToken(int userNo, String userEmail, String refreshToken) {
+        this.userNo = userNo;
+        this.userEmail = userEmail;
+        this.tokenRefreshToken = refreshToken;
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.tokenRefreshToken = refreshToken;
     }
 }

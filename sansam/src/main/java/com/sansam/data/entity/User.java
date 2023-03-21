@@ -47,6 +47,13 @@ public class User {
         this.userLocation = userLocation;
         this.userRole = userRole;
     }
+
+    public void updateSignUp(String userNicknm, int userAge, Character userGender, String userLocation) {
+        this.userNicknm = userNicknm;
+        this.userAge = userAge;
+        this.userGender = userGender;
+        this.userLocation = userLocation;
+    }
 }
 
 

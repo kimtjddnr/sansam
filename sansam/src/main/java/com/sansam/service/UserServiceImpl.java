@@ -23,10 +23,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void SignUp(SignUpRequest signUpRequest) {
         User user = userRepository.findByUserNo(signUpRequest.getUserNo());
-        user.setUserNicknm(signUpRequest.getUserNicknm());
-        user.setUserAge(signUpRequest.getUserAge());
-        user.setUserGender(signUpRequest.getUserGender());
-        user.setUserLocation(signUpRequest.getUserLocation());
+        user.updateSignUp(signUpRequest.getUserNicknm(), signUpRequest.getUserAge(), signUpRequest.getUserGender(), signUpRequest.getUserLocation());
     }
 
     @Override
@@ -37,12 +34,10 @@ public class UserServiceImpl implements UserService {
 
         if (token == null) {
             token = new Token();
-            token.setUserNo(userNo);
-            token.setUserEmail(user.getUserEmail());
-            token.setTokenRefreshToken(refreshToken);
+            token.createToken(userNo, user.getUserEmail(), refreshToken);
             tokenRepository.save(token);
         }
 
-        token.setTokenRefreshToken(refreshToken);
+        token.updateRefreshToken(refreshToken);
     }
 }
