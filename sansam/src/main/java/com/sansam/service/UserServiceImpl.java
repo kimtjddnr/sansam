@@ -1,5 +1,6 @@
 package com.sansam.service;
 
+import com.sansam.config.jwt.JwtProvider;
 import com.sansam.data.entity.Token;
 import com.sansam.data.entity.User;
 import com.sansam.data.repository.TokenRepository;
@@ -19,6 +20,8 @@ public class UserServiceImpl implements UserService {
 
     private final TokenRepository tokenRepository;
 
+    private final JwtProvider jwtProvider;
+
     @Override
     @Transactional
     public void SignUp(SignUpRequest signUpRequest) {
@@ -28,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void saveRefreshToken(String refreshToken, int userNo) {
+    public void SaveRefreshToken(String refreshToken, int userNo) {
         Token token = tokenRepository.findByUserNo(userNo);
         User user = userRepository.findByUserNo(userNo);
 
@@ -39,5 +42,13 @@ public class UserServiceImpl implements UserService {
         }
 
         token.updateRefreshToken(refreshToken);
+    }
+
+    @Override
+    @Transactional
+    public void SignOut(String refreshToken) {
+        String userEmail = jwtProvider.getEmailFromToken(refreshToken);
+        Token token = tokenRepository.findByUserEmail(userEmail);
+        token.updateRefreshToken(null);
     }
 }

@@ -1,6 +1,7 @@
 package com.sansam.config.jwt;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,13 +9,15 @@ import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
 
-import static io.jsonwebtoken.security.Keys.secretKeyFor;
-
 @Component
 public class JwtProvider {
 
     // 랜덤 키 생성
-    private final Key key = secretKeyFor(SignatureAlgorithm.HS512);
+//    private final Key key = secretKeyFor(SignatureAlgorithm.HS512);
+
+    String secretKeyword = "sansamsecretkeyasdfsadfbsdiafasdfbsuaidfbdsauifbsadfuibdsafsdafadsfsdafasd";
+
+    Key key = Keys.hmacShaKeyFor(secretKeyword.getBytes());
 
     // access token 생성
     public String createAccessToken(String userEmail) {
@@ -77,5 +80,18 @@ public class JwtProvider {
                 .getBody();
 
         return String.valueOf(claims.get("userEmail"));
+    }
+
+    public String getEmailFromToken(String token) {
+        Jws<Claims> jwsClaims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token);
+
+        Claims claims = jwsClaims.getBody();
+        String userEmail = (String) claims.get("userEmail");
+        System.out.println("userEmail: " + userEmail);
+
+        return userEmail;
     }
 }
