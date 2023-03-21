@@ -5,7 +5,7 @@ function Login() {
   // navigation기능 사용을 위해 navigate 선언
   const navigate = useNavigate();
 
-  // 주소값(localhost:3000/login?accessToken='코드'?refreshToken='코드') 받아오기 위해 searchParams 사용
+  // 주소값(localhost:3000/login?accessToken='코드'?refreshToken='코드') 받아오기 위해 useLocation 사용
   const location = useLocation();
   const Token = location.search.split("?");
   const accessToken = Token[1];
