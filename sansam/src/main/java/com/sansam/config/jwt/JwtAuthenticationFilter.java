@@ -1,12 +1,12 @@
 package com.sansam.config.jwt;
 
+import com.sansam.service.UserDetailsServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -15,12 +15,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private UserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
     private final JwtProvider jwtProvider;
 
-    public JwtAuthenticationFilter(JwtProvider jwtProvider) {
+    public JwtAuthenticationFilter(UserDetailsServiceImpl userDetailsService, JwtProvider jwtProvider) {
+        this.userDetailsService = userDetailsService;
         this.jwtProvider = jwtProvider;
     }
 
@@ -43,6 +45,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (ExpiredJwtException e) {
                 checkRefreshToken(refreshToken, response);
+                accessToken = jwtProvider.createAccessToken(jwtProvider.validateToken(refreshToken));
+                response.setHeader("X-ACCESS-TOKEN", accessToken);
+                response.setStatus(201);
             } catch (JwtException e) {
                 response.setStatus(500);
             }

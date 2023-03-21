@@ -3,6 +3,7 @@ package com.sansam.config;
 import com.sansam.config.jwt.JwtAuthenticationFilter;
 import com.sansam.config.jwt.JwtProvider;
 import com.sansam.service.OAuth2UserServiceImpl;
+import com.sansam.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     private final JwtProvider jwtProvider;
+
+    private final UserDetailsServiceImpl userDetailsService;
 
     private final OAuth2UserServiceImpl oAuth2UserServiceImpl;
 
@@ -49,7 +52,7 @@ public class WebSecurityConfig {
             .successHandler(authenticationSuccessHandler)
             .failureHandler(authenticationFailureHandler);
         http
-            .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(new JwtAuthenticationFilter(userDetailsService, jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
