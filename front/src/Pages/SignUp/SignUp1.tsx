@@ -52,39 +52,22 @@ function SignUp1() {
     event: React.ChangeEvent<HTMLInputElement>,
     type: any
   ) => {
-    // console.log(event.target.value);
+    console.log(event.target.value);
     setSignUp({
       ...signUp,
       [type]: event.target.value,
     });
   };
 
-  // react-select 라이브러리에 onChange함수를 위해 따로 함수를 생성함.
   const handleSelect = (
     event: React.ChangeEvent<HTMLSelectElement>,
     type: any
   ) => {
-    // console.log(event.target.value);
+    console.log(event.target.value);
     setSignUp({
       ...signUp,
       [type]: event.target.value,
     });
-  };
-
-  const apiSignUp1 = () => {
-    axios
-      .post("/user/signup", {
-        // userNo:
-        userNo: signUp.userNicknm,
-        userAge: signUp.userAge,
-        userGender: signUp.userGender,
-        userLocation: signUp.userLocation,
-      })
-      .then((response) => {
-        if (response.data) {
-          moveToSignUp2();
-        }
-      });
   };
 
   return (
