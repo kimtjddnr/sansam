@@ -3,15 +3,19 @@ package com.sansam.controller;
 import com.sansam.config.jwt.JwtProvider;
 import com.sansam.data.entity.User;
 import com.sansam.data.repository.UserRepository;
+import com.sansam.dto.request.ExperienceRequest;
 import com.sansam.dto.request.SignOutRequest;
 import com.sansam.dto.request.SignUpRequest;
 import com.sansam.dto.response.SignUpResponse;
 import com.sansam.service.UserServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -73,4 +77,26 @@ public class UserController {
         }
     }
 
+    @ApiOperation(
+			value = "최초 회원가입 시 산 정보 저장",
+			notes = "산 정보 저장이 성공적으로 이루어지면 Success를, 실패하면 Fail을 반환한다.")
+    @PostMapping("/experience")
+    public ResponseEntity<?> experience(@RequestHeader(value="X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody ExperienceRequest experienceRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        if (response.getHeader("X-ACCESS-TOKEN") != null) {
+            headers.set("X-ACCESS-TOKEN", response.getHeader("X-ACCESS-TOKEN"));
+        } else {
+            headers.set("X-ACCESS-TOKEN", accessToken);
+        }
+
+        String userEmail = jwtProvider.getEmailFromToken(accessToken);
+        User user = userRepository.findByUserEmail(userEmail);
+
+        try {
+            userService.SaveInitialExperience(user.getUserNo(), experienceRequest);
+            return new ResponseEntity<>("Success", headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Fail", headers, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
