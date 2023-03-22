@@ -61,8 +61,8 @@ public class UserController {
     }
 
     @ApiOperation(
-			value = "카카오 인가코드 발송",
-			notes = "인가코드를 받으면 success를 반환하고, 실패하면 fail을 반환한다.")
+			value = "로그아웃",
+			notes = "로그아웃 과정에서 refreshToken을 만료시키고 성공하면 Success를, 실패 시 Fail을 반환한다.")
     @PostMapping("/signout")
     public ResponseEntity<String> signOut(@RequestBody SignOutRequest signOutRequest) {
         try {
