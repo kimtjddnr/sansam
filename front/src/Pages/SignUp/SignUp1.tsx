@@ -95,7 +95,7 @@ function SignUp1() {
     // console.log(typeof Number(signUp.userAge));
 
     axios
-      .post("http://localhost:5000/user/signup", {
+      .post("/user/signup", {
         userNo: signUp.userNo,
         userNicknm: signUp.userNicknm,
         userAge: Number(signUp.userAge),
