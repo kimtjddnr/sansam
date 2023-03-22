@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styled from "styled-components";
 import axios from "axios";
@@ -37,37 +38,76 @@ const genders: Option[] = [
 function SignUp1() {
   const navigate = useNavigate();
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const userNo = String(searchParams.get("no"));
+
+  // 컴포넌트 mount시에 url에서 no 값 받아오기.
+  useEffect(() => {
+    // const url = "signup?no=1";
+    // userNo 주소에서 받아오기
+    setSignUp({
+      ...signUp,
+      ["userNo"]: userNo,
+    });
+  }, []);
+
   const moveToSignUp2 = () => {
     navigate("/signup/2");
   };
 
   const [signUp, setSignUp] = useState({
+    userNo: "",
     userNicknm: "",
     userAge: "",
-    userGender: "",
-    userLocation: "",
+    userGender: "남",
+    userLocation: "서울시",
   });
 
   const changeSignUp = (
     event: React.ChangeEvent<HTMLInputElement>,
     type: any
   ) => {
-    console.log(event.target.value);
     setSignUp({
       ...signUp,
       [type]: event.target.value,
     });
   };
 
+  // react-select 라이브러리에 onChange함수를 위해 따로 함수를 생성함.
   const handleSelect = (
     event: React.ChangeEvent<HTMLSelectElement>,
     type: any
   ) => {
-    console.log(event.target.value);
     setSignUp({
       ...signUp,
       [type]: event.target.value,
     });
+  };
+
+  const apiSignUp1 = () => {
+    console.log(signUp.userNo);
+    console.log(signUp.userNicknm);
+    console.log(signUp.userAge);
+    console.log(signUp.userGender);
+    console.log(signUp.userLocation);
+
+    // axios
+    //   .post("/user/signup", {
+    //     userNo: signUp.userNo,
+    //     userNicknm: signUp.userNicknm,
+    //     userAge: signUp.userAge,
+    //     userGender: signUp.userGender,
+    //     userLocation: signUp.userLocation,
+    //   })
+    //   .then((response) => {
+    //     if (response.data) {
+    //       moveToSignUp2();
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   };
 
   return (
@@ -116,7 +156,7 @@ function SignUp1() {
         </StyledSelect>
       </StyledDiv2>
 
-      <StyledButton>완료</StyledButton>
+      <StyledButton onClick={apiSignUp1}>완료</StyledButton>
     </StyledDiv>
   );
 }
