@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import styled from "styled-components";
-import axios from "axios";
+import axios from "../../store/baseURL";
 
 interface Option {
   value: string;
@@ -40,15 +40,16 @@ function SignUp1() {
 
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const userNo = String(searchParams.get("no"));
-
   // 컴포넌트 mount시에 url에서 no 값 받아오기.
   useEffect(() => {
     // const url = "signup?no=1";
     // userNo 주소에서 받아오기
+    const userNo = Number(searchParams.get("no"));
+    // console.log(userNo);
+
     setSignUp({
       ...signUp,
-      ["userNo"]: userNo,
+      userNo: userNo,
     });
   }, []);
 
@@ -57,10 +58,10 @@ function SignUp1() {
   };
 
   const [signUp, setSignUp] = useState({
-    userNo: "",
+    userNo: 0,
     userNicknm: "",
     userAge: "",
-    userGender: "남",
+    userGender: "M",
     userLocation: "서울시",
   });
 
@@ -91,23 +92,25 @@ function SignUp1() {
     console.log(signUp.userAge);
     console.log(signUp.userGender);
     console.log(signUp.userLocation);
+    // console.log(typeof Number(signUp.userAge));
 
-    // axios
-    //   .post("/user/signup", {
-    //     userNo: signUp.userNo,
-    //     userNicknm: signUp.userNicknm,
-    //     userAge: signUp.userAge,
-    //     userGender: signUp.userGender,
-    //     userLocation: signUp.userLocation,
-    //   })
-    //   .then((response) => {
-    //     if (response.data) {
-    //       moveToSignUp2();
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    axios
+      .post("http://localhost:5000/user/signup", {
+        userNo: signUp.userNo,
+        userNicknm: signUp.userNicknm,
+        userAge: Number(signUp.userAge),
+        userGender: signUp.userGender,
+        userLocation: signUp.userLocation,
+      })
+      .then((response) => {
+        console.log("success");
+        if (response.data) {
+          moveToSignUp2();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -126,7 +129,7 @@ function SignUp1() {
       </StyledDiv2>
       <StyledDiv2>
         <StyledInput
-          type="text"
+          type="number"
           value={signUp.userAge}
           onChange={(event) => {
             changeSignUp(event, "userAge");
