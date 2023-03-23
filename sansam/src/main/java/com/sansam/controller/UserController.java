@@ -4,7 +4,7 @@ import com.sansam.config.jwt.JwtProvider;
 import com.sansam.data.entity.User;
 import com.sansam.data.repository.UserRepository;
 import com.sansam.dto.request.SaveExperienceRequest;
-import com.sansam.dto.request.SaveFavoriteRequest;
+import com.sansam.dto.request.FavoriteRequest;
 import com.sansam.dto.request.SignOutRequest;
 import com.sansam.dto.request.SignUpRequest;
 import com.sansam.dto.response.FavoriteListResponse;
@@ -106,7 +106,7 @@ public class UserController {
     }
 
     @PostMapping("/favorite/insert")
-    public ResponseEntity<?> saveFavorite(@RequestHeader(value="X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody SaveFavoriteRequest saveFavoriteRequest) {
+    public ResponseEntity<?> saveFavorite(@RequestHeader(value="X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody FavoriteRequest favoriteRequest) {
         HttpHeaders headers = new HttpHeaders();
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
             headers.set("X-ACCESS-TOKEN", response.getHeader("X-ACCESS-TOKEN"));
@@ -118,7 +118,27 @@ public class UserController {
         User user = userRepository.findByUserEmail(userEmail);
 
         try {
-            userService.SaveFavorite(user.getUserNo(), saveFavoriteRequest);
+            userService.SaveFavorite(user.getUserNo(), favoriteRequest);
+            return new ResponseEntity<>("Success", headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Fail", headers, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/favorite/delete")
+    public ResponseEntity<?> removeFavorite(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody FavoriteRequest favoriteRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        if (response.getHeader("X-ACCESS-TOKEN") != null) {
+            headers.set("X-ACCESS-TOKEN", response.getHeader("X-ACCESS-TOKEN"));
+        } else {
+            headers.set("X-ACCESS-TOKEN", accessToken);
+        }
+
+        String userEmail = jwtProvider.getEmailFromToken(accessToken);
+        User user = userRepository.findByUserEmail(userEmail);
+
+        try {
+            userService.removeFavorite(user.getUserNo(), favoriteRequest);
             return new ResponseEntity<>("Success", headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Fail", headers, HttpStatus.BAD_REQUEST);

@@ -4,7 +4,7 @@ import com.sansam.config.jwt.JwtProvider;
 import com.sansam.data.entity.*;
 import com.sansam.data.repository.*;
 import com.sansam.dto.request.SaveExperienceRequest;
-import com.sansam.dto.request.SaveFavoriteRequest;
+import com.sansam.dto.request.FavoriteRequest;
 import com.sansam.dto.request.SignUpRequest;
 import com.sansam.dto.response.CourseResponse;
 import com.sansam.dto.response.FavoriteListResponse;
@@ -79,9 +79,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void SaveFavorite(int userNo, SaveFavoriteRequest saveFavoriteRequest) {
+    public void SaveFavorite(int userNo, FavoriteRequest favoriteRequest) {
         Favorite favorite = new Favorite();
-        favorite.createFavorite(userNo, saveFavoriteRequest.getCourseNo());
+        favorite.createFavorite(userNo, favoriteRequest.getCourseNo());
         favoriteRepository.save(favorite);
+    }
+
+    @Override
+    @Transactional
+    public void removeFavorite(int userNo, FavoriteRequest favoriteRequest) {
+        favoriteRepository.deleteByUserNoAndCourseNo(userNo, favoriteRequest.getCourseNo());
     }
 }
