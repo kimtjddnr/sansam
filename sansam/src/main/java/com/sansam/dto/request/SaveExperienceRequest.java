@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ExperienceRequest {
+public class SaveExperienceRequest {
     private String exMtNm;
     private Character exDiff;
 }

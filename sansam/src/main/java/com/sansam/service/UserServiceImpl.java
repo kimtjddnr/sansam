@@ -3,7 +3,7 @@ package com.sansam.service;
 import com.sansam.config.jwt.JwtProvider;
 import com.sansam.data.entity.*;
 import com.sansam.data.repository.*;
-import com.sansam.dto.request.ExperienceRequest;
+import com.sansam.dto.request.SaveExperienceRequest;
 import com.sansam.dto.request.SignUpRequest;
 import com.sansam.dto.response.CourseResponse;
 import com.sansam.dto.response.FavoriteListResponse;
@@ -58,9 +58,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void SaveInitialExperience(int userNo, ExperienceRequest experienceRequest) {
+    public void SaveInitialExperience(int userNo, SaveExperienceRequest saveExperienceRequest) {
         Experience experience = new Experience();
-        experience.createExperience(userNo, experienceRequest.getExMtNm(), experienceRequest.getExDiff());
+        experience.createExperience(userNo, saveExperienceRequest.getExMtNm(), saveExperienceRequest.getExDiff());
         experienceRepository.save(experience);
     }
 
