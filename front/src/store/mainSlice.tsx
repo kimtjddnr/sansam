@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface courseInfo {
-  courseNo: number;
-  courseMtNm: string;
-  courseMtCd: number;
-  courseMtNo: number;
-  courseXCoords: Array<number>;
-  courseYCoords: Array<number>;
-  courseAbsDiff: string;
-  courseUptime: number;
-  courseDowntime: number;
-  courseLength: number;
-  courseLocation: string;
+  courseNo?: number;
+  courseMtNm?: string;
+  courseMtCd?: number;
+  courseMtNo?: number;
+  courseXCoords?: Array<number>;
+  courseYCoords?: Array<number>;
+  courseAbsDiff?: string;
+  courseUptime?: number;
+  courseDowntime?: number;
+  courseLength?: number;
+  courseLocation?: string;
 }
 
 export interface ItemInfo {
