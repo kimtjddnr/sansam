@@ -105,7 +105,7 @@ public class UserController {
 			value = "찜 목록",
 			notes = "찜 목록을 조회하고 성공하면 찜 목록을, 실패하면 Fail을 반환한다.")
     @GetMapping("/favorite")
-    public ResponseEntity<?> favoriteList(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response) {
+    public ResponseEntity<?> getFavoriteList(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response) {
         HttpHeaders headers = new HttpHeaders();
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
             headers.set("X-ACCESS-TOKEN", response.getHeader("X-ACCESS-TOKEN"));

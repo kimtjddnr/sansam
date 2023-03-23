@@ -22,7 +22,7 @@ public class CourseController {
 			value = "산 목록",
 			notes = "산 목록을 조회하여 성공 시 배열에 담아 반환하고, 실패 시 Fail을 반환한다.")
     @GetMapping("/mtlist")
-    public ResponseEntity<?> mountainList(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response) {
+    public ResponseEntity<?> getMountainList(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response) {
         HttpHeaders headers = new HttpHeaders();
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
             headers.set("X-ACCESS-TOKEN", response.getHeader("X-ACCESS-TOKEN"));
