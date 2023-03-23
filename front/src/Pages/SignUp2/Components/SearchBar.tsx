@@ -2,12 +2,40 @@ import React from 'react';
 import styled from "styled-components";
 import { useState } from 'react';
 import { useEffect } from 'react';
+import axios from '../../../store/baseURL';
 
 interface SearchDatas {
   mountain: string;
 }
 
 function SearchBar() {
+
+  // SearchBar가 랜더링되면 산목록 axios 받아서 Redus store에 저장
+  function getMtList() {
+
+    const AccessToken =  sessionStorage.getItem('accessToken')
+    const RefreshToken = sessionStorage.getItem('refreshToken')
+    console.log(AccessToken, RefreshToken)
+
+    axios
+    .get("/course/mtlist", {
+      headers : {
+        'X-ACCESS-TOKEN': AccessToken,
+        'X-REFRESH-TOKEN': RefreshToken,
+      }
+    })
+
+    .then((res) => {
+      console.log("산목록 받기 성공")
+      console.log(res.data.mountainList)
+      // 이제 결과값을 redux store에 저장하면 됨
+    })
+    .catch((err) => console.log("errror"))
+  }
+  useEffect(() => {
+    getMtList()
+  }, [])
+
 
   // keyword(검색창에 입력하는 값) useState 세팅
   const [keyword, setKeyword] = useState<string>("");
