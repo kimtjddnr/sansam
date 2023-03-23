@@ -4,6 +4,7 @@ import com.sansam.config.jwt.JwtProvider;
 import com.sansam.data.entity.User;
 import com.sansam.data.repository.UserRepository;
 import com.sansam.dto.request.SaveExperienceRequest;
+import com.sansam.dto.request.SaveFavoriteRequest;
 import com.sansam.dto.request.SignOutRequest;
 import com.sansam.dto.request.SignUpRequest;
 import com.sansam.dto.response.FavoriteListResponse;
@@ -77,7 +78,7 @@ public class UserController {
         User user = userRepository.findByUserEmail(userEmail);
 
         try {
-            userService.SaveInitialExperience(user.getUserNo(), saveExperienceRequest);
+            userService.SaveExperience(user.getUserNo(), saveExperienceRequest);
             return new ResponseEntity<>("Success", headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Fail", headers, HttpStatus.BAD_REQUEST);
@@ -101,6 +102,26 @@ public class UserController {
             return new ResponseEntity<>(favoriteListResponse, headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/favorite/insert")
+    public ResponseEntity<?> saveFavorite(@RequestHeader(value="X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody SaveFavoriteRequest saveFavoriteRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        if (response.getHeader("X-ACCESS-TOKEN") != null) {
+            headers.set("X-ACCESS-TOKEN", response.getHeader("X-ACCESS-TOKEN"));
+        } else {
+            headers.set("X-ACCESS-TOKEN", accessToken);
+        }
+
+        String userEmail = jwtProvider.getEmailFromToken(accessToken);
+        User user = userRepository.findByUserEmail(userEmail);
+
+        try {
+            userService.SaveFavorite(user.getUserNo(), saveFavoriteRequest);
+            return new ResponseEntity<>("Success", headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Fail", headers, HttpStatus.BAD_REQUEST);
         }
     }
 }

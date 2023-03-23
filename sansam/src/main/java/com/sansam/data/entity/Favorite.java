@@ -30,4 +30,9 @@ public class Favorite {
         this.userNo = userNo;
         this.courseNo = courseNo;
     }
+
+    public void createFavorite(int userNo, int courseNo) {
+        this.userNo = userNo;
+        this.courseNo = courseNo;
+    }
 }

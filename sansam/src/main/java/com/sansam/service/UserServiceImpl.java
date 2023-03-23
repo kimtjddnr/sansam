@@ -4,6 +4,7 @@ import com.sansam.config.jwt.JwtProvider;
 import com.sansam.data.entity.*;
 import com.sansam.data.repository.*;
 import com.sansam.dto.request.SaveExperienceRequest;
+import com.sansam.dto.request.SaveFavoriteRequest;
 import com.sansam.dto.request.SignUpRequest;
 import com.sansam.dto.response.CourseResponse;
 import com.sansam.dto.response.FavoriteListResponse;
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void SaveInitialExperience(int userNo, SaveExperienceRequest saveExperienceRequest) {
+    public void SaveExperience(int userNo, SaveExperienceRequest saveExperienceRequest) {
         Experience experience = new Experience();
         experience.createExperience(userNo, saveExperienceRequest.getExMtNm(), saveExperienceRequest.getExDiff());
         experienceRepository.save(experience);
@@ -74,5 +75,13 @@ public class UserServiceImpl implements UserService {
         }
 
         return new FavoriteListResponse(favoriteCourses);
+    }
+
+    @Override
+    @Transactional
+    public void SaveFavorite(int userNo, SaveFavoriteRequest saveFavoriteRequest) {
+        Favorite favorite = new Favorite();
+        favorite.createFavorite(userNo, saveFavoriteRequest.getCourseNo());
+        favoriteRepository.save(favorite);
     }
 }
