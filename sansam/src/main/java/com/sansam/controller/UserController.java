@@ -64,7 +64,7 @@ public class UserController {
     @ApiOperation(
 			value = "최초 회원가입 시 산 정보 저장",
 			notes = "산 정보 저장이 성공적으로 이루어지면 Success를, 실패하면 Fail을 반환한다.")
-    @PostMapping("/experience")
+    @PostMapping("/experience/insert")
     public ResponseEntity<?> saveExperience(@RequestHeader(value="X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody SaveExperienceRequest saveExperienceRequest) {
         HttpHeaders headers = new HttpHeaders();
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
