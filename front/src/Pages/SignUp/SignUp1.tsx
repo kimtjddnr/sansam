@@ -42,10 +42,8 @@ function SignUp1() {
 
   // 컴포넌트 mount시에 url에서 no 값 받아오기.
   useEffect(() => {
-    // const url = "signup?no=1";
     // userNo 주소에서 받아오기
     const userNo = Number(searchParams.get("no"));
-    // console.log(userNo);
 
     setSignUp({
       ...signUp,
@@ -75,7 +73,7 @@ function SignUp1() {
     });
   };
 
-  // react-select 라이브러리에 onChange함수를 위해 따로 함수를 생성함.
+  // select 태그를 위해 onChange함수를 따로 생성함.
   const handleSelect = (
     event: React.ChangeEvent<HTMLSelectElement>,
     type: any

@@ -19,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Start />} />
         <Route path="/login/*" element={<Login />} />
-        <Route path="/signup/" element={<SignUp1 />} />
+        <Route path="/signup/1" element={<SignUp1 />} />
         <Route path="/signup/2" element={<SignUp2 />} />
         <Route path="/main/*" element={<Main />} />
         <Route path="/filtermt/*" element={<FilterMt />} />
