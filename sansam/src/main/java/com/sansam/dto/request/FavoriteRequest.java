@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class SaveFavoriteRequest {
+public class FavoriteRequest {
     private int courseNo;
 }
