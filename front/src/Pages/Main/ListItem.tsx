@@ -10,6 +10,7 @@ const StyledH = styled.p`
   font-weight: bold;
   font-size: 4vw;
   text-align: left;
+  margin-bottom: 5px;
 `;
 
 const StyledDiv = styled.div`
@@ -24,10 +25,19 @@ const StyledSlide = styled(SwiperSlide)`
   border-radius: 5px;
 `;
 
-function ListItem({ userAge, userGender, courseList }: ItemInfo) {
+function ListItem({ courseName, userAge, userGender, courseList }: ItemInfo) {
+  const url = "https://www.forest.go.kr/images/data/down/mountain/";
+
   return (
     <div className="ListItem">
-      <StyledH>20대 여성분들이 선호하는 코스</StyledH>
+      {userAge && userGender ? (
+        <StyledH>
+          {userAge}대 {userGender}분들이 선호하는 코스
+        </StyledH>
+      ) : (
+        <StyledH>{courseName}</StyledH>
+      )}
+
       <StyledDiv>
         <Swiper
           modules={[FreeMode]}
@@ -37,7 +47,9 @@ function ListItem({ userAge, userGender, courseList }: ItemInfo) {
           freeMode={true}
         >
           {courseList.map(course => (
-            <StyledSlide key={course}>{course}</StyledSlide>
+            <StyledSlide key={course.courseNo}>
+              {course.courseMtNm} {course.courseMtNo}코스
+            </StyledSlide>
           ))}
         </Swiper>
       </StyledDiv>
