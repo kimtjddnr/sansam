@@ -24,24 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 @AllArgsConstructor
 public class UserController {
     private final JwtProvider jwtProvider;
-
     private final UserServiceImpl userService;
-
     private final UserRepository userRepository;
-
-    @ApiOperation(
-			value = "카카오 인가코드 발송",
-			notes = "인가코드를 받으면 success를 반환하고, 실패하면 fail을 반환한다.")
-    @GetMapping("/oauth/code")
-    public ResponseEntity<String> kakaoCode(@RequestParam String code) {
-        try {
-            System.out.println(code);
-            return new ResponseEntity<>("success", HttpStatus.OK);
-        } catch (Exception e) {
-            System.out.println(e);
-            return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
-        }
-    }
 
     @ApiOperation(
 			value = "카카오 OAuth 회원가입",
@@ -60,7 +44,6 @@ public class UserController {
             signUpResponse.setRefreshToken(refreshToken);
             return new ResponseEntity<>(signUpResponse, HttpStatus.OK);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
         }
     }
@@ -82,7 +65,7 @@ public class UserController {
 			value = "최초 회원가입 시 산 정보 저장",
 			notes = "산 정보 저장이 성공적으로 이루어지면 Success를, 실패하면 Fail을 반환한다.")
     @PostMapping("/experience")
-    public ResponseEntity<?> experience(@RequestHeader(value="X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody ExperienceRequest experienceRequest) {
+    public ResponseEntity<?> saveExperience(@RequestHeader(value="X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody ExperienceRequest experienceRequest) {
         HttpHeaders headers = new HttpHeaders();
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
             headers.set("X-ACCESS-TOKEN", response.getHeader("X-ACCESS-TOKEN"));
