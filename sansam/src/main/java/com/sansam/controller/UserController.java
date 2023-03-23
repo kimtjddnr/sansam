@@ -6,6 +6,7 @@ import com.sansam.data.repository.UserRepository;
 import com.sansam.dto.request.ExperienceRequest;
 import com.sansam.dto.request.SignOutRequest;
 import com.sansam.dto.request.SignUpRequest;
+import com.sansam.dto.response.FavoriteListResponse;
 import com.sansam.dto.response.SignUpResponse;
 import com.sansam.service.UserServiceImpl;
 import io.swagger.annotations.ApiOperation;
@@ -97,6 +98,26 @@ public class UserController {
             return new ResponseEntity<>("Success", headers, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Fail", headers, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation(
+			value = "찜 목록",
+			notes = "찜 목록을 조회하고 성공하면 찜 목록을, 실패하면 Fail을 반환한다.")
+    @GetMapping("/favorite")
+    public ResponseEntity<?> favoriteList(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response) {
+        HttpHeaders headers = new HttpHeaders();
+        if (response.getHeader("X-ACCESS-TOKEN") != null) {
+            headers.set("X-ACCESS-TOKEN", response.getHeader("X-ACCESS-TOKEN"));
+        } else {
+            headers.set("X-ACCESS-TOKEN", accessToken);
+        }
+
+        try {
+            FavoriteListResponse favoriteListResponse = userService.getFavoriteList(jwtProvider.getEmailFromToken(accessToken));
+            return new ResponseEntity<>(favoriteListResponse, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
         }
     }
 }
