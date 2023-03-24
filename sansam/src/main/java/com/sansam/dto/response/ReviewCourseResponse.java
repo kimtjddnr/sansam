@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -25,6 +26,7 @@ public class ReviewCourseResponse {
     private BigDecimal courseLength;
     private String courseLocation;
     private String courseAddress;
+    private Date reviewDate;
     private int reviewTime;
     private String  reviewContent;
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -24,6 +25,9 @@ public class Review {
     @Column(name = "COURSE_NO", nullable = false)
     private int courseNo;
 
+    @Column(name = "REVIEW_DATE", nullable = false)
+    private Date reviewDate;
+
     @Column(name = "REVIEW_TIME", nullable = false)
     private int reviewTime;
 
@@ -38,6 +42,15 @@ public class Review {
         this.reviewNo = reviewNo;
         this.userNo = userNo;
         this.courseNo = courseNo;
+        this.reviewTime = reviewTime;
+        this.reviewRelDiff = reviewRelDiff;
+        this.reviewContent = reviewContent;
+    }
+
+    public void createReview(int userNo, int courseNo, Date reviewDate, int reviewTime, Character reviewRelDiff, String reviewContent) {
+        this.userNo = userNo;
+        this.courseNo = courseNo;
+        this.reviewDate = reviewDate;
         this.reviewTime = reviewTime;
         this.reviewRelDiff = reviewRelDiff;
         this.reviewContent = reviewContent;

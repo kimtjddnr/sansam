@@ -2,6 +2,7 @@ package com.sansam.service;
 
 import com.sansam.dto.request.SaveExperienceRequest;
 import com.sansam.dto.request.FavoriteRequest;
+import com.sansam.dto.request.SaveReviewRequest;
 import com.sansam.dto.request.SignUpRequest;
 import com.sansam.dto.response.FavoriteListResponse;
 import com.sansam.dto.response.ReviewListResponse;
@@ -17,4 +18,5 @@ public interface UserService {
     void SaveFavorite(int userNo, FavoriteRequest favoriteRequest);
     void removeFavorite(int userNo, FavoriteRequest favoriteRequest);
     ReviewListResponse getReviewList(String userEmail);
+    void SaveReview(int userNo, SaveReviewRequest saveReviewRequest);
 }

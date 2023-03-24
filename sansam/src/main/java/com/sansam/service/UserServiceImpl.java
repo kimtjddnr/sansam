@@ -5,6 +5,7 @@ import com.sansam.data.entity.*;
 import com.sansam.data.repository.*;
 import com.sansam.dto.request.SaveExperienceRequest;
 import com.sansam.dto.request.FavoriteRequest;
+import com.sansam.dto.request.SaveReviewRequest;
 import com.sansam.dto.request.SignUpRequest;
 import com.sansam.dto.response.CourseResponse;
 import com.sansam.dto.response.FavoriteListResponse;
@@ -101,9 +102,17 @@ public class UserServiceImpl implements UserService {
         List<Review> reviews = reviewRepository.findAllByUserNo(user.getUserNo());
         for (Review review : reviews) {
             CourseResponse courseResponse = courseService.getCourseDetails(review.getCourseNo());
-            reviewList.add(new ReviewCourseResponse(courseResponse.getCourseNo(), courseResponse.getCourseMtNm(), courseResponse.getCourseMtCd(), courseResponse.getCourseMtNo(), courseResponse.getCourseXCoords(), courseResponse.getCourseYCoords(), courseResponse.getCourseAbsDiff(), courseResponse.getCourseUptime(), courseResponse.getCourseDowntime(), courseResponse.getCourseLength(), courseResponse.getCourseLocation(), courseResponse.getCourseAddress(), review.getReviewTime(), review.getReviewContent()));
+            reviewList.add(new ReviewCourseResponse(courseResponse.getCourseNo(), courseResponse.getCourseMtNm(), courseResponse.getCourseMtCd(), courseResponse.getCourseMtNo(), courseResponse.getCourseXCoords(), courseResponse.getCourseYCoords(), courseResponse.getCourseAbsDiff(), courseResponse.getCourseUptime(), courseResponse.getCourseDowntime(), courseResponse.getCourseLength(), courseResponse.getCourseLocation(), courseResponse.getCourseAddress(), review.getReviewDate(), review.getReviewTime(), review.getReviewContent()));
         }
 
         return new ReviewListResponse(reviewList);
+    }
+
+    @Override
+    @Transactional
+    public void SaveReview(int userNo, SaveReviewRequest saveReviewRequest) {
+        Review review = new Review();
+        review.createReview(userNo, saveReviewRequest.getCourseNo(), saveReviewRequest.getReviewDate(), saveReviewRequest.getReviewTime(), saveReviewRequest.getReviewDiff(), saveReviewRequest.getReviewContent());
+        reviewRepository.save(review);
     }
 }
