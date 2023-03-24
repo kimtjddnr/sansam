@@ -45,12 +45,11 @@ function Review() {
 const StyledContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
-  /* width: 90%; */
 `;
 
 const StyledDiv = styled.div`
   padding-top: 40%;
-  height: 100vh;
+  /* height: 100vh; */
   font-family: "GmarketSansLight";
 `;
 

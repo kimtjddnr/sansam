@@ -6,7 +6,6 @@ interface Props {
 }
 
 function StyledButtonSoso({ onClick, soso }: Props) {
-  console.log(soso);
   return (
     <div>
       {soso === false ? (
@@ -14,7 +13,7 @@ function StyledButtonSoso({ onClick, soso }: Props) {
           <img
             src={"/img/mountainEmpty.png"}
             alt="soso button"
-            width={"25%"}
+            width={"60%"}
             onClick={onClick}
           />
         </StyledDiv>
@@ -23,7 +22,7 @@ function StyledButtonSoso({ onClick, soso }: Props) {
           <img
             src={"/img/mountainFull.png"}
             alt="soso button"
-            width={"25%"}
+            width={"60%"}
             onClick={onClick}
           />
         </StyledDiv>
@@ -32,14 +31,8 @@ function StyledButtonSoso({ onClick, soso }: Props) {
   );
 }
 
-const StyledContainer = styled.div`
-  /* display: inline-block; */
-`;
-
 const StyledDiv = styled.div`
   padding-top: 10%;
-  float: left;
-  /* margin-left: 10vw; */
 `;
 
 export default StyledButtonSoso;

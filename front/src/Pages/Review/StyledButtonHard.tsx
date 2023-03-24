@@ -6,7 +6,6 @@ interface Props {
 }
 
 function StyledButtonHard({ onClick, hard }: Props) {
-  console.log(hard);
   return (
     <div>
       {hard === false ? (
@@ -14,7 +13,7 @@ function StyledButtonHard({ onClick, hard }: Props) {
           <img
             src={"/img/mountainEmpty.png"}
             alt="hard button"
-            width={"25%"}
+            width={"60%"}
             onClick={onClick}
           />
         </StyledDiv>
@@ -23,7 +22,7 @@ function StyledButtonHard({ onClick, hard }: Props) {
           <img
             src={"/img/mountainFull.png"}
             alt="hard button"
-            width={"25%"}
+            width={"60%"}
             onClick={onClick}
           />
         </StyledDiv>
@@ -34,7 +33,6 @@ function StyledButtonHard({ onClick, hard }: Props) {
 
 const StyledDiv = styled.div`
   padding-top: 10%;
-  /* margin-left: 10vw; */
 `;
 
 export default StyledButtonHard;

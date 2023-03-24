@@ -6,35 +6,40 @@ interface Props {
 }
 
 function StyledButtonEasy({ onClick, easy }: Props) {
-  console.log(easy);
   return (
-    <div>
+    <StyledDiv>
       {easy === false ? (
-        <StyledDiv>
+        <StyledInnerDiv>
           <img
             src={"/img/mountainEmpty.png"}
             alt="easy button"
-            width={"25%"}
+            width={"60%"}
             onClick={onClick}
           />
-        </StyledDiv>
+        </StyledInnerDiv>
       ) : (
-        <StyledDiv>
+        <StyledInnerDiv>
           <img
             src={"/img/mountainFull.png"}
             alt="easy button"
-            width={"25%"}
+            width={"60%"}
             onClick={onClick}
           />
-        </StyledDiv>
+        </StyledInnerDiv>
       )}
-    </div>
+      <StyledText></StyledText>쉬움
+    </StyledDiv>
   );
 }
 
 const StyledDiv = styled.div`
-  padding-top: 10%;
-  margin-left: 10vw;
+  margin-left: 10%;
 `;
+
+const StyledInnerDiv = styled.div`
+  padding-top: 10%;
+`;
+
+const StyledText = styled.div;
 
 export default StyledButtonEasy;
