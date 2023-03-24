@@ -42,6 +42,7 @@ function Review() {
         rows={10}
         placeholder="등산 후기를 자유롭게 입력해주세요"
       ></StyledTextBox>
+      <StyledSubmitButton>저장하기</StyledSubmitButton>
     </StyledDiv>
   );
 }
@@ -49,8 +50,8 @@ function Review() {
 const StyledContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
-  /* font-family: "GmarketSansLight"; */
   font-weight: bold;
+  font-family: "GmarketSansLight";
 `;
 
 const StyledDiv = styled.div`
@@ -71,7 +72,20 @@ const StyledTextBox = styled.textarea`
   resize: none;
   border-radius: 5px;
   border: 2px solid #d9d9d9;
+  font-family: "GmarketSansLight";
+  text-align: center;
+  font-weight: bold;
   /* float: center; */
+`;
+
+const StyledSubmitButton = styled.button`
+  width: 60%;
+  margin-top: 10%;
+  margin-left: 20%;
+  height: 5vh;
+  font-family: "GmarketSansLight";
+  font-weight: bold;
+  font-size: medium;
 `;
 
 // const StyledButtonEasy = styled.img`

@@ -39,6 +39,7 @@ const StyledDiv = styled.div`
 const StyledInnerDiv = styled.div`
   padding-top: 10%;
   text-align: center;
+  font-family: "GmarketSansLight";
 `;
 
 const StyledText = styled.div`

@@ -7,7 +7,7 @@ interface Props {
 
 function StyledButtonHard({ onClick, hard }: Props) {
   return (
-    <div>
+    <StyledDiv>
       {hard === false ? (
         <StyledInnerdDiv>
           <img
@@ -28,7 +28,7 @@ function StyledButtonHard({ onClick, hard }: Props) {
         </StyledInnerdDiv>
       )}
       <StyledText>어려움</StyledText>
-    </div>
+    </StyledDiv>
   );
 }
 
