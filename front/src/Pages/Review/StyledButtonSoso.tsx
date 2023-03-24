@@ -7,32 +7,44 @@ interface Props {
 
 function StyledButtonSoso({ onClick, soso }: Props) {
   return (
-    <div>
+    <StyledDiv>
       {soso === false ? (
-        <StyledDiv>
+        <StyledInnerDiv>
           <img
             src={"/img/mountainEmpty.png"}
             alt="soso button"
             width={"60%"}
             onClick={onClick}
           />
-        </StyledDiv>
+        </StyledInnerDiv>
       ) : (
-        <StyledDiv>
+        <StyledInnerDiv>
           <img
             src={"/img/mountainFull.png"}
             alt="soso button"
             width={"60%"}
             onClick={onClick}
           />
-        </StyledDiv>
+        </StyledInnerDiv>
       )}
-    </div>
+      <StyledText>보통</StyledText>
+    </StyledDiv>
   );
 }
 
 const StyledDiv = styled.div`
+  /* padding-left: 10%; */
+`;
+
+const StyledInnerDiv = styled.div`
   padding-top: 10%;
+  text-align: center;
+`;
+
+const StyledText = styled.div`
+  font-family: "GmarketSansLight";
+  text-align: center;
+  color: #838383;
 `;
 
 export default StyledButtonSoso;

@@ -33,15 +33,18 @@ function StyledButtonEasy({ onClick, easy }: Props) {
 }
 
 const StyledDiv = styled.div`
-  margin-left: 10%;
+  /* padding-left: 10%; */
 `;
 
 const StyledInnerDiv = styled.div`
   padding-top: 10%;
+  text-align: center;
 `;
 
 const StyledText = styled.div`
+  font-family: "GmarketSansLight";
   text-align: center;
+  color: #8ce090;
 `;
 
 export default StyledButtonEasy;

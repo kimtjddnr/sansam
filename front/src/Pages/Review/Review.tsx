@@ -38,6 +38,10 @@ function Review() {
         <StyledButtonSoso onClick={sosoToggle} soso={soso} />
         <StyledButtonHard onClick={hardToggle} hard={hard} />
       </StyledContainer>
+      <StyledTextBox
+        rows={10}
+        placeholder="등산 후기를 자유롭게 입력해주세요"
+      ></StyledTextBox>
     </StyledDiv>
   );
 }
@@ -45,18 +49,29 @@ function Review() {
 const StyledContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
+  /* font-family: "GmarketSansLight"; */
+  font-weight: bold;
 `;
 
 const StyledDiv = styled.div`
   padding-top: 40%;
-  /* height: 100vh; */
-  font-family: "GmarketSansLight";
 `;
 
 const StyledHeader = styled.h1`
-  font-size: 6vw;
+  font-family: "GmarketSansLight";
   text-align: center;
+  font-size: 6vw;
   padding: 4vw;
+`;
+
+const StyledTextBox = styled.textarea`
+  margin-top: 10%;
+  margin-left: 10%;
+  width: 80%;
+  resize: none;
+  border-radius: 5px;
+  border: 2px solid #d9d9d9;
+  /* float: center; */
 `;
 
 // const StyledButtonEasy = styled.img`
