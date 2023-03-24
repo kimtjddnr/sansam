@@ -27,7 +27,7 @@ function StyledButtonEasy({ onClick, easy }: Props) {
           />
         </StyledInnerDiv>
       )}
-      <StyledText></StyledText>쉬움
+      <StyledText>쉬움</StyledText>
     </StyledDiv>
   );
 }
@@ -40,6 +40,8 @@ const StyledInnerDiv = styled.div`
   padding-top: 10%;
 `;
 
-const StyledText = styled.div;
+const StyledText = styled.div`
+  text-align: center;
+`;
 
 export default StyledButtonEasy;
