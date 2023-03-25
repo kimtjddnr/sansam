@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void saveRe(String refreshToken, int userNo) {
+    public void saveRefreshToken(String refreshToken, int userNo) {
         Token token = tokenRepository.findByUserNo(userNo);
         User user = userRepository.findByUserNo(userNo);
 

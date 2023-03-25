@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
     void signUp(SignUpRequest signUpRequest);
-    void saveRe(String refreshToken, int userNo);
+    void saveRefreshToken(String refreshToken, int userNo);
     void signOut(String refreshToken);
     void saveExperience(int userNo, SaveExperienceRequest saveExperienceRequest);
     FavoriteListResponse getFavoriteList(String userEmail);
