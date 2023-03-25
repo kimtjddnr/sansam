@@ -46,6 +46,7 @@ public class UserServiceImpl implements UserService {
         }
 
         token.updateRefreshToken(refreshToken);
+        tokenRepository.save(token);
     }
 
     @Override
