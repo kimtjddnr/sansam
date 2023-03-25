@@ -119,4 +119,11 @@ public class UserServiceImpl implements UserService {
         review.updateReview(updateReviewRequest.getReviewRelDiff(), updateReviewRequest.getReviewContent());
         reviewRepository.save(review);
     }
+
+    @Override
+    @Transactional
+    public void deleteReview(int userNo, int courseNo) {
+        Review review = reviewRepository.findByUserNoAndCourseNo(userNo, courseNo);
+        reviewRepository.delete(review);
+    }
 }

@@ -218,4 +218,27 @@ public class UserController {
             return new ResponseEntity<>("Fail", headers, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @ApiOperation(
+            value = "리뷰 삭제",
+            notes = "해당 유저의 해당 코스 리뷰를 삭제하고, 성공하면 Success를, 실패하면 Fail을 반환한다.")
+    @DeleteMapping("/review/delete/{courseNo}")
+    public ResponseEntity<String> deleteReview(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @PathVariable int courseNo) {
+        HttpHeaders headers = new HttpHeaders();
+        if (response.getHeader("X-ACCESS-TOKEN") != null) {
+            headers.set("X-ACCESS-TOKEN", response.getHeader("X-ACCESS-TOKEN"));
+        } else {
+            headers.set("X-ACCESS-TOKEN", accessToken);
+        }
+
+        String userEmail = jwtProvider.getEmailFromToken(accessToken);
+        User user = userRepository.findByUserEmail(userEmail);
+
+        try {
+            userService.deleteReview(user.getUserNo(), courseNo);
+            return new ResponseEntity<>("Success", headers, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Fail", headers, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
