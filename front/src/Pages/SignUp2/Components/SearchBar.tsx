@@ -96,9 +96,9 @@ function SearchBar() {
       {keyItems ? (
         <AutoSearchDiv>
           <AutoSearchUl>
-            keyItems.slice(0,6).map((mtname) => {
-              <AutoSearchLi>{mtname}</AutoSearchLi>
-            })
+            {(keyItems.slice(0,6)).map((mtname) => (
+              <AutoSearchLi key={mtname}>{mtname}</AutoSearchLi>
+            ))}
           </AutoSearchUl>
         </AutoSearchDiv>
       ) : null}
