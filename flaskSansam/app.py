@@ -144,7 +144,6 @@ def get_course_by_area():
             course_in_dict = {}
             for item in course:
                 course_in_dict[item] = course[item]
-            print(course_in_dict)
             result['COURSE_LIST'].append(course_in_dict)
 
     response = make_response(jsonify(result))
