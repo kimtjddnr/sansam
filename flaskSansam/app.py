@@ -105,7 +105,7 @@ def get_course_by_area():
         "COURSE_LIST": []
     }
 
-    if request.form['courseLocation'] == "현재 위치":
+    if request.get_json()['courseLocation'] == "현재 위치":
         with database.connect() as conn:
             courses = conn.execute(text(f"""
                 SELECT c.*, (SELECT COORD_X FROM `COORDINATE` WHERE COURSE_NO = c.COURSE_NO LIMIT 1) AS COORD_START_X,
@@ -113,7 +113,7 @@ def get_course_by_area():
                 FROM `COURSE` AS c
             """)).mappings().all()
 
-        start = (float(request.form['coordX']), float(request.form['coordY']))
+        start = (float(request.get_json()['coordX']), float(request.get_json()['coordY']))
         for course in courses:
             course_in_dict = {}
             endpoint = [0, 0]
@@ -123,7 +123,7 @@ def get_course_by_area():
                 if item == 'COORD_START_Y':
                     endpoint[1] = course[item]
             end = (float(endpoint[0]), float(endpoint[1]))
-            if haversine(start, end) <= float(request.form['courseRadius']):
+            if haversine(start, end) <= float(request.get_json()['courseRadius']):
                 for item in course:
                     course_in_dict[item] = course[item]
                 del course_in_dict['COORD_START_X']
@@ -135,9 +135,9 @@ def get_course_by_area():
             courses = conn.execute(text(f"""
                 SELECT *
                 FROM `COURSE`
-                WHERE `COURSE_LOCATION` = '{request.form['courseLocation']}'
-                AND `COURSE_LENGTH` BETWEEN {course_length[int(request.form['courseLength'])][0]} AND {course_length[int(request.form['courseLength'])][1]}
-                AND `COURSE_UPTIME` + `COURSE_DOWNTIME` BETWEEN {course_time[int(request.form['courseTime'])][0]} AND {course_time[int(request.form['courseTime'])][1]}
+                WHERE `COURSE_LOCATION` = '{request.get_json()['courseLocation']}'
+                AND `COURSE_LENGTH` BETWEEN {course_length[int(request.get_json()['courseLengthBtNo'])][0]} AND {course_length[int(request.get_json()['courseLengthBtNo'])][1]}
+                AND `COURSE_UPTIME` + `COURSE_DOWNTIME` BETWEEN {course_time[int(request.get_json()['courseTimeBtNo'])][0]} AND {course_time[int(request.get_json()['courseTimeBtNo'])][1]}
             """)).mappings().all()
 
         for course in courses:
