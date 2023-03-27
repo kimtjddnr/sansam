@@ -13,7 +13,7 @@ function StyledButtonEasy({ onClick, easy }: Props) {
           <img
             src={"/img/mountainEmpty.png"}
             alt="easy button"
-            width={"60%"}
+            width={"80%"}
             onClick={onClick}
           />
         </StyledInnerDiv>
@@ -22,7 +22,7 @@ function StyledButtonEasy({ onClick, easy }: Props) {
           <img
             src={"/img/mountainFull.png"}
             alt="easy button"
-            width={"60%"}
+            width={"80%"}
             onClick={onClick}
           />
         </StyledInnerDiv>
@@ -32,12 +32,11 @@ function StyledButtonEasy({ onClick, easy }: Props) {
   );
 }
 
-const StyledDiv = styled.div`
-  /* padding-left: 10%; */
-`;
+const StyledDiv = styled.div``;
 
 const StyledInnerDiv = styled.div`
-  padding-top: 10%;
+  /* width: 60%; */
+  /* padding-top: 10%; */
   text-align: center;
   font-family: "GmarketSansLight";
 `;
