@@ -20,10 +20,18 @@ const StyledH3 = styled.h3`
     transform: translateY(-50%);
     width: 3vw;
     height: 3vw;
-    border: 4px solid #bddbc7;
+    border: 4px solid #238c47;
     border-radius: 100%;
     background-color: white;
   }
+`;
+
+const StyledHr = styled.hr`
+  margin-left: -5vw;
+  color: #d4d3d3;
+  background-color: #d4d3d3;
+  height: 1px;
+  border: 0;
 `;
 
 const StyledP = styled.p`
@@ -37,12 +45,13 @@ const StyledP1 = styled.p`
 `;
 
 const ReviewCard = styled.div`
-  border: 1px solid #238c47;
+  border: 1px solid #d4d3d3;
   border-radius: 8px;
   padding-left: 18px;
   padding-bottom: 7px;
-  margin-bottom: 2vw;
+  margin-bottom: 5vw;
   position: relative;
+  box-shadow: 5px 5px 5px #b7b7b7;
   ::before {
     content: "";
     margin-top: -5vw;
@@ -50,7 +59,7 @@ const ReviewCard = styled.div`
     left: -39px;
     width: 2px;
     height: 130%;
-    background-color: #238c47;
+    background-color: #ddd;
   }
 `;
 
@@ -84,13 +93,10 @@ function MyPage() {
           "X-REFRESH-TOKEN": refreshToken,
         },
       });
-      console.log(res);
       setReviewCourses(res.data.reviewCourses);
     };
     getReviewCourse();
   }, []);
-
-  console.log(reviewCourses);
 
   return (
     <div className="MyPage">
@@ -98,9 +104,10 @@ function MyPage() {
       {/* <h1>MyPage</h1> */}
       <StyledDiv>
         <div>
-          {reviewCourses.map(review => (
-            <ReviewCard key={review.courseNo}>
+          {reviewCourses.map((review, idx) => (
+            <ReviewCard key={idx}>
               <StyledH3>{review.reviewDate?.toString()}</StyledH3>
+              <StyledHr />
               <StyledP>
                 {review.courseMtNm} {review.courseMtNo}코스{" "}
                 {review.courseAbsDiff === "H" ? (
@@ -111,7 +118,21 @@ function MyPage() {
                   <span>⭐</span>
                 )}
               </StyledP>
-              <StyledP1>소요시간 : {review.reviewTime}분</StyledP1>
+              <StyledP1>
+                소요시간{" "}
+                {review.reviewTime ? (
+                  <span>
+                    {Math.floor(review.reviewTime / 60)}시간{" "}
+                    {review.reviewTime % 60 ? (
+                      <span>{review.reviewTime % 60}분</span>
+                    ) : (
+                      <span></span>
+                    )}
+                  </span>
+                ) : (
+                  <span></span>
+                )}
+              </StyledP1>
               <StyledP1>{review.reviewContent}</StyledP1>
             </ReviewCard>
           ))}
