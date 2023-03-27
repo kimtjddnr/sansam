@@ -1,3 +1,4 @@
+import Navbar from "../../Common/Navbar/Navbar";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -93,12 +94,12 @@ function Review() {
       axios
         .post("/user/review/insert", {
           headers: {
-            // "X-ACCESS-TOKEN": sessionStorage.getItem("accessToken"),
-            // "X-REFRESH-TOKEN": sessionStorage.getItem("refreshToken"),
-            "X-ACCESS-TOKEN":
-              "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTY3OTg5NDYzNSwiZXhwIjoxNjc5ODk2NDM1LCJ1c2VyRW1haWwiOiJqaW53b29sZWU5NEBnbWFpbC5jb20ifQ.IiWCIy6LtNW0Vz90XC00gqVQU8AcOCiZUpzt9xO0hVBsjBWYZt9XENE4fmB_ENFolrM9Z2E_fZ_qJzKz0p3t6g",
-            "X-REFRESH-TOKEN":
-              "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSZWZyZXNoVG9rZW4iLCJpYXQiOjE2Nzk4OTQ2MzUsImV4cCI6MTY4MTEwNDIzNSwidXNlckVtYWlsIjoiamlud29vbGVlOTRAZ21haWwuY29tIn0.JHZeJqzZiEJ_EbpxL3XWpMbYPU3BK-cFK21bjlZTvohA5SrkaTCOaRFNLiiWucAycj2x_H2YYCyouyV-uOPuJA",
+            "X-ACCESS-TOKEN": sessionStorage.getItem("accessToken"),
+            "X-REFRESH-TOKEN": sessionStorage.getItem("refreshToken"),
+            // "X-ACCESS-TOKEN":
+            //   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTY3OTg5NDYzNSwiZXhwIjoxNjc5ODk2NDM1LCJ1c2VyRW1haWwiOiJqaW53b29sZWU5NEBnbWFpbC5jb20ifQ.IiWCIy6LtNW0Vz90XC00gqVQU8AcOCiZUpzt9xO0hVBsjBWYZt9XENE4fmB_ENFolrM9Z2E_fZ_qJzKz0p3t6g",
+            // "X-REFRESH-TOKEN":
+            //   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSZWZyZXNoVG9rZW4iLCJpYXQiOjE2Nzk4OTQ2MzUsImV4cCI6MTY4MTEwNDIzNSwidXNlckVtYWlsIjoiamlud29vbGVlOTRAZ21haWwuY29tIn0.JHZeJqzZiEJ_EbpxL3XWpMbYPU3BK-cFK21bjlZTvohA5SrkaTCOaRFNLiiWucAycj2x_H2YYCyouyV-uOPuJA",
           },
           courseNo: Number(review.courseNo),
           reviewTime: Number(review.reviewTime),
@@ -121,6 +122,7 @@ function Review() {
 
   return (
     <StyledDiv>
+      <Navbar />
       <StyledHeader>
         {/* 오늘 "...{props.COURSE_MT_NM}+{props.COURSE_MT_NO}" <br /> 등산은 어땠나요??        // (3) props로 넘겨받은 정보로 코스명을 보여주기 */}
         오늘 "..." <br /> 등산은 어땠나요??
@@ -147,9 +149,7 @@ function Review() {
   );
 }
 
-const StyledDiv = styled.div`
-  padding-top: 40%;
-`;
+const StyledDiv = styled.div``;
 
 const StyledBox = styled.div`
   margin: 5% 0 5%;
@@ -163,6 +163,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledHeader = styled.h1`
+  margin-top: 25%;
   font-family: "GmarketSansLight";
   text-align: center;
   font-size: 6vw;
