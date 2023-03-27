@@ -91,15 +91,12 @@ function Review() {
   const apiReviewInsert = () => {
     if (review.reviewDiff !== "") {
       console.log(review);
+      console.log(sessionStorage.getItem("accessToken"));
       axios
         .post("/user/review/insert", {
           headers: {
             "X-ACCESS-TOKEN": sessionStorage.getItem("accessToken"),
             "X-REFRESH-TOKEN": sessionStorage.getItem("refreshToken"),
-            // "X-ACCESS-TOKEN":
-            //   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImlhdCI6MTY3OTg5NDYzNSwiZXhwIjoxNjc5ODk2NDM1LCJ1c2VyRW1haWwiOiJqaW53b29sZWU5NEBnbWFpbC5jb20ifQ.IiWCIy6LtNW0Vz90XC00gqVQU8AcOCiZUpzt9xO0hVBsjBWYZt9XENE4fmB_ENFolrM9Z2E_fZ_qJzKz0p3t6g",
-            // "X-REFRESH-TOKEN":
-            //   "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJSZWZyZXNoVG9rZW4iLCJpYXQiOjE2Nzk4OTQ2MzUsImV4cCI6MTY4MTEwNDIzNSwidXNlckVtYWlsIjoiamlud29vbGVlOTRAZ21haWwuY29tIn0.JHZeJqzZiEJ_EbpxL3XWpMbYPU3BK-cFK21bjlZTvohA5SrkaTCOaRFNLiiWucAycj2x_H2YYCyouyV-uOPuJA",
           },
           courseNo: Number(review.courseNo),
           reviewTime: Number(review.reviewTime),
