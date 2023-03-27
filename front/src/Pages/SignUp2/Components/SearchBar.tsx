@@ -72,6 +72,7 @@ function SearchBar() {
       }
     })
     setKeyItems(matches);
+    console.log(keyItems)
   }
   // 검색창에 keyword가 입력될 때 유사도 검사 알고리즘이 작동, 자연스러운 작동위해 딜레이를 줌
   useEffect(() => {
@@ -82,6 +83,13 @@ function SearchBar() {
       clearTimeout(debounce);
     };
   }, [keyword]);
+
+
+  // 자동완성에 뜬 산이름을 클릭할 경우 발생하는 클릭이벤트
+  function AutoSearchClick() {
+    // 이거 메인페이지에 맞게 만들면 돼 선영아
+    // usestate로 값 받아서 검색창에 넣어주면 될듯?
+  }
 
   return (
     <div>
@@ -102,8 +110,8 @@ function SearchBar() {
       {keyword ? (
         <AutoSearchDiv>
           <AutoSearchUl>
-            {(keyItems.slice(0,6)).map((mtname) => (
-              <AutoSearchLi key={mtname}>{mtname}</AutoSearchLi>
+            {(keyItems.slice(1,6)).map((mtname) => (
+              <AutoSearchLi key={mtname} onClick={AutoSearchClick}>{mtname}</AutoSearchLi>
             ))}
           </AutoSearchUl>
         </AutoSearchDiv>
@@ -169,14 +177,15 @@ const AutoSearchDiv = styled.div`
 
 const AutoSearchUl = styled.ul`
   padding-left: 0vw;
+  padding-top : 2vw;
 `;
 
 const AutoSearchLi = styled.li`
   list-style-type: none;
   font-size: 6vw;
   font-weight: bold;
-  // margin-bottom : 3vw;
-  height: 10vw;
+  padding-bottom : 3vw;
+  height: 13vw;
   padding-top: 3vw;
   border-radius: 10px;
   &: hover {
