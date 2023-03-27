@@ -6,15 +6,12 @@ import styled from "styled-components";
 const StyledDiv = styled.div`
   padding-left: 20vw;
   padding-right: 12vw;
+  margin-top: 5vw;
   font-family: "GmarketSansLight";
 `;
 
-const ReviewCard = styled.div`
-  border: 1px solid #238c47;
-  border-radius: 8px;
-  padding-left: 5vw;
+const StyledH3 = styled.h3`
   margin-bottom: 2vw;
-  position: relative;
   ::before {
     content: "";
     position: absolute;
@@ -23,10 +20,37 @@ const ReviewCard = styled.div`
     transform: translateY(-50%);
     width: 3vw;
     height: 3vw;
-    border: 5px solid #238c47;
+    border: 4px solid #bddbc7;
     border-radius: 100%;
+    background-color: white;
+  }
+`;
+
+const StyledP = styled.p`
+  margin-top: 0px;
+  margin-bottom: 5px;
+`;
+
+const StyledP1 = styled.p`
+  margin-top: 0px;
+  margin-bottom: 8px;
+`;
+
+const ReviewCard = styled.div`
+  border: 1px solid #238c47;
+  border-radius: 8px;
+  padding-left: 18px;
+  padding-bottom: 7px;
+  margin-bottom: 2vw;
+  position: relative;
+  ::before {
+    content: "";
+    margin-top: -5vw;
+    position: absolute;
+    left: -39px;
+    width: 2px;
+    height: 130%;
     background-color: #238c47;
-    opacity: 0.5;
   }
 `;
 
@@ -71,24 +95,24 @@ function MyPage() {
   return (
     <div className="MyPage">
       <Navbar />
-      <h1>MyPage</h1>
+      {/* <h1>MyPage</h1> */}
       <StyledDiv>
         <div>
           {reviewCourses.map(review => (
             <ReviewCard key={review.courseNo}>
-              <h3>{review.reviewDate?.toString()}</h3>
-              <p>
+              <StyledH3>{review.reviewDate?.toString()}</StyledH3>
+              <StyledP>
                 {review.courseMtNm} {review.courseMtNo}코스{" "}
-                {review.courseAbsDiff == "H" ? (
+                {review.courseAbsDiff === "H" ? (
                   <span>⭐⭐⭐</span>
-                ) : review.courseAbsDiff == "N" ? (
+                ) : review.courseAbsDiff === "N" ? (
                   <span>⭐⭐</span>
                 ) : (
                   <span>⭐</span>
                 )}
-              </p>
-              <p>소요시간 : {review.reviewTime}분</p>
-              <p>{review.reviewContent}</p>
+              </StyledP>
+              <StyledP1>소요시간 : {review.reviewTime}분</StyledP1>
+              <StyledP1>{review.reviewContent}</StyledP1>
             </ReviewCard>
           ))}
         </div>
