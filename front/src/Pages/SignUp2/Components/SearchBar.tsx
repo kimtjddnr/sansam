@@ -50,7 +50,7 @@ function SearchBar() {
   // keyword(검색창에 입력하는 값) useState 세팅
   const [keyword, setKeyword] = useState<string>("");
 
-  // 검색창에 입력하는 값을 keyword useState에 저장
+  // 검색창 입력값 변할 때마다 입력하는 값을 keyword useState에 저장
   const onChangeData = (e: React.FormEvent<HTMLInputElement>) => {
     setKeyword(e.currentTarget.value.trim());
     console.log(keyword);
@@ -61,6 +61,7 @@ function SearchBar() {
   const initialSearchData : SearchDatas = [""]
   const [keyItems, setKeyItems] = useState<SearchDatas>(initialSearchData);
 
+  // 자동완성을 위한 유사도 검사 알고리즘
   function AutoSearchAlgo() {
     type MatchData = [string]
     const matches : MatchData = [""]
@@ -72,6 +73,7 @@ function SearchBar() {
     })
     setKeyItems(matches);
   }
+  // 검색창에 keyword가 입력될 때 유사도 검사 알고리즘이 작동, 자연스러운 작동위해 딜레이를 줌
   useEffect(() => {
     const debounce = setTimeout(() => {
       if (keyword) AutoSearchAlgo();
@@ -90,10 +92,14 @@ function SearchBar() {
           onChange={onChangeData}
         />
         {/* <SearchBtn>검 색</SearchBtn> */}
+
+        {/* 이거 돋보기 버튼이야 선영아 */}
         {/* <img src="/dotbogi.png" alt="dotbogi" /> */}
+        {/* styled div 안에 img로 css 수정할 수 있음 */}
       </SearchBarDiv>
-      {/* 임시조치된 상태입니다 */}
-      {keyItems ? (
+
+      {/* 검색 키워드가 있어야 자동완성창을 보여줌 */}
+      {keyword ? (
         <AutoSearchDiv>
           <AutoSearchUl>
             {(keyItems.slice(0,6)).map((mtname) => (
