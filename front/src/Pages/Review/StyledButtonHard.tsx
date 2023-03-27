@@ -13,7 +13,7 @@ function StyledButtonHard({ onClick, hard }: Props) {
           <img
             src={"/img/mountainEmpty.png"}
             alt="hard button"
-            width={"60%"}
+            width={"80%"}
             onClick={onClick}
           />
         </StyledInnerdDiv>
@@ -22,7 +22,7 @@ function StyledButtonHard({ onClick, hard }: Props) {
           <img
             src={"/img/mountainFull.png"}
             alt="hard button"
-            width={"60%"}
+            width={"80%"}
             onClick={onClick}
           />
         </StyledInnerdDiv>
@@ -37,7 +37,7 @@ const StyledDiv = styled.div`
 `;
 
 const StyledInnerdDiv = styled.div`
-  padding-top: 10%;
+  /* padding-top: 10%; */
   text-align: center;
 `;
 
