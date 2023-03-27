@@ -13,7 +13,7 @@ function StyledButtonSoso({ onClick, soso }: Props) {
           <img
             src={"/img/mountainEmpty.png"}
             alt="soso button"
-            width={"60%"}
+            width={"80%"}
             onClick={onClick}
           />
         </StyledInnerDiv>
@@ -22,7 +22,7 @@ function StyledButtonSoso({ onClick, soso }: Props) {
           <img
             src={"/img/mountainFull.png"}
             alt="soso button"
-            width={"60%"}
+            width={"80%"}
             onClick={onClick}
           />
         </StyledInnerDiv>
@@ -37,7 +37,7 @@ const StyledDiv = styled.div`
 `;
 
 const StyledInnerDiv = styled.div`
-  padding-top: 10%;
+  /* padding-top: 10%; */
   text-align: center;
 `;
 
