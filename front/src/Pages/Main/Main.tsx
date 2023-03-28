@@ -11,6 +11,14 @@ import {
   changeNormalCourse,
   changeHardCourse,
 } from "../../store/mainSlice";
+import {
+  changeAgeGender,
+  changeEasyCourses,
+  changeNormalCourses,
+  changeHardCourses,
+} from "../../store/RecommendSlice";
+import { courseApi } from "../../api";
+import RecommendSlice from "../../store/RecommendSlice";
 
 const StyledH = styled.p`
   text-align: center;
@@ -22,6 +30,8 @@ const StyledH = styled.p`
 function Main() {
   // dispatch 사용하기 위해 정의해주기
   const dispatch = useAppDispatch();
+  const accessToken = sessionStorage.getItem("accessToken");
+  const refreshToken = sessionStorage.getItem("refreshToken");
 
   // 처음 마운트 됐을 때
   useEffect(() => {
@@ -45,10 +55,17 @@ function Main() {
       const res = await axios.get("/dummy/HardCourse.json");
       dispatch(changeHardCourse(res.data));
     };
+    // 1. recommendSlice 사용한 코드
+    const getageGender = async () => {
+      const res = await courseApi.ageGender(accessToken, refreshToken);
+      dispatch(changeAgeGender(res.data));
+      // console.log(res.data);
+    };
     getGenderAge();
     getEasyCourse();
     getNormalCourse();
     getHardCourse();
+    getageGender();
   }, []);
 
   return (
