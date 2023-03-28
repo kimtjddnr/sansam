@@ -18,7 +18,6 @@ import {
   changeHardCourses,
 } from "../../store/RecommendSlice";
 import { courseApi } from "../../api";
-import RecommendSlice from "../../store/RecommendSlice";
 
 const StyledH = styled.p`
   text-align: center;
@@ -55,7 +54,7 @@ function Main() {
       const res = await axios.get("/dummy/HardCourse.json");
       dispatch(changeHardCourse(res.data));
     };
-    // 1. recommendSlice 사용한 코드
+    // 1. axios 모듈화, recommendSlice 사용한 코드
     const getageGender = async () => {
       const res = await courseApi.ageGender(accessToken, refreshToken);
       dispatch(changeAgeGender(res.data));
