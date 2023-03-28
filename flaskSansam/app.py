@@ -1,5 +1,3 @@
-import json
-
 from flask import Flask, request, make_response, jsonify
 from sqlalchemy import create_engine, text
 from haversine import haversine
