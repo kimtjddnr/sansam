@@ -37,7 +37,6 @@ def get_course_by_age_and_gender():
     refresh_token = request.headers.get("X-REFRESH-TOKEN")
 
     email_response = get_email_response(access_token, refresh_token)
-    print(email_response.json()['userEmail'])
     user_email = email_response.json()['userEmail']
     access_token = email_response.headers.get("X-ACCESS-TOKEN")
 
@@ -195,6 +194,25 @@ def get_course_by_mt_name():
 
     body = {}
     body["course_list"]=courses
+
+    response = make_response(body)
+    response.headers["X-ACCESS-TOKEN"] = access_token
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Expose-Headers", "X-ACCESS-TOKEN")
+
+    return response
+
+
+@app.route("/course/main/easy", methods=["GET"])
+def get_course_recommend_easy():
+    access_token = request.headers.get("X-ACCESS-TOKEN")
+    refresh_token = request.headers.get("X-REFRESH-TOKEN")
+
+    email_response = get_email_response(access_token, refresh_token)
+    user_email = email_response.json()['userEmail']
+    access_token = email_response.headers.get("X-ACCESS-TOKEN")
+
+    body = {}
 
     response = make_response(body)
     response.headers["X-ACCESS-TOKEN"] = access_token
