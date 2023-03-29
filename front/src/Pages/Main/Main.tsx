@@ -61,24 +61,24 @@ function Main() {
       // console.log(res.data);
     };
     // axios 모듈화 안되어있는 코드
-    const test = async () => {
-      const res = await axios.get(
-        "http://localhost:5001/course/main/age-gender",
-        {
-          headers: {
-            "X-ACCESS-TOKEN": accessToken,
-            "X-REFRESH-TOKEN": refreshToken,
-          },
-        }
-      );
-      console.log(res);
-    };
+    // const test = async () => {
+    //   const res = await axios.get(
+    //     "http://localhost:5001/course/main/age-gender",
+    //     {
+    //       headers: {
+    //         "X-ACCESS-TOKEN": accessToken,
+    //         "X-REFRESH-TOKEN": refreshToken,
+    //       },
+    //     }
+    //   );
+    //   console.log(res);
+    // };
     getGenderAge();
     getEasyCourse();
     getNormalCourse();
     getHardCourse();
-    // getageGender();
-    test();
+    getageGender();
+    // test();
   }, []);
 
   return (
