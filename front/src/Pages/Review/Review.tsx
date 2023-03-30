@@ -1,4 +1,3 @@
-import Navbar from "../../Common/Navbar/Navbar";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -7,21 +6,25 @@ import StyledButtonSoso from "./StyledButtonSoso";
 import StyledButtonHard from "./StyledButtonHard";
 import axios from "../../store/baseURL.js";
 
-interface MountainInfo {
-  // 2. props 타입
-  COURSE_NO: number;
-  COURSE_MT_CD: string;
-  COURSE_MT_NM: string;
-  COURSE_MT_NO: number;
-  COURSE_ABS_DIFF: string;
-  COURSE_UPTIME: number;
-  COURSE_DOWNTIME: number;
-  COURSE_LENGTH: number;
-  COURSE_LOCATION: string;
-  COURSE_ADDRESS: string;
+interface courseInfo {
+  // props 타입.
+  courseNo?: number;
+  courseMtNm?: string;
+  courseMtCd?: number;
+  courseMtNo?: number;
+  courseXCoords?: Array<number>;
+  courseYCoords?: Array<number>;
+  courseAbsDiff?: string;
+  courseUptime?: number;
+  courseDowntime?: number;
+  courseLength?: number;
+  courseLocation?: string;
+  reviewDate?: Date;
+  reviewTime?: number;
+  reviewContent?: string;
 }
 
-// function Review(props: MountainInfo) {                       // (1)
+// function Review(props: courseInfo) {                       // (1)
 // 코스 정보 객체 받아오기. (백엔드 API가 완성되면 해결하기....)
 function Review() {
   const navigate = useNavigate();
@@ -93,16 +96,21 @@ function Review() {
       console.log(review);
       console.log(sessionStorage.getItem("accessToken"));
       axios
-        .post("/user/review/insert", {
-          headers: {
-            "X-ACCESS-TOKEN": sessionStorage.getItem("accessToken"),
-            "X-REFRESH-TOKEN": sessionStorage.getItem("refreshToken"),
+        .post(
+          "/user/review/insert",
+          {
+            courseNo: Number(review.courseNo),
+            reviewTime: Number(review.reviewTime),
+            reviewDiff: review.reviewDiff,
+            reviewContent: review.reviewContent,
           },
-          courseNo: Number(review.courseNo),
-          reviewTime: Number(review.reviewTime),
-          reviewDiff: review.reviewDiff,
-          reviewContent: review.reviewContent,
-        })
+          {
+            headers: {
+              "X-ACCESS-TOKEN": sessionStorage.getItem("accessToken"),
+              "X-REFRESH-TOKEN": sessionStorage.getItem("refreshToken"),
+            },
+          }
+        )
         .then((response) => {
           console.log("success");
           if (response.data) {
@@ -119,9 +127,8 @@ function Review() {
 
   return (
     <StyledDiv>
-      <Navbar />
       <StyledHeader>
-        {/* 오늘 "...{props.COURSE_MT_NM}+{props.COURSE_MT_NO}" <br /> 등산은 어땠나요??        // (3) props로 넘겨받은 정보로 코스명을 보여주기 */}
+        {/* 오늘 "...{props.courseMtNm}+{props.courseMtNo}" <br /> 등산은 어땠나요??        // (3) props로 넘겨받은 정보로 코스명을 보여주기 */}
         오늘 "..." <br /> 등산은 어땠나요??
       </StyledHeader>
       <StyledBox>

@@ -13,6 +13,7 @@ import Review from "./Pages/Review/Review";
 import Photo from "./Pages/Photo/Photo";
 import MyPage from "./Pages/MyPage/MyPage";
 import NotFound from "./Pages/Exception/NotFound";
+import Stopwatch from "./Pages/Hiking/Stopwatch";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/filterrg/*" element={<FilterRg />} />
         <Route path="/coursedetail/*" element={<CourseDetail />} />
         <Route path="/hiking/*" element={<Hiking />} />
+        <Route path="/stopwatch/*" element={<Stopwatch />} />
         <Route path="/review/*" element={<Review />} />
         <Route path="/photo/*" element={<Photo />} />
         <Route path="/mypage/*" element={<MyPage />} />
