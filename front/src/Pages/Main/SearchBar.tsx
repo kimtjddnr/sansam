@@ -48,14 +48,10 @@ function SearchBar() {
   // 검색창 focus 상태 useState 세팅
   const [isFocus, setIsFocus] = useState(false);
 
-  // 검색창에서 아래/위 버튼 누르면 불 들어오게 해주면 좋을거같은데 일단 보류...
-
-  // 산이름 클릭 시 해당 산 이름 저장해 줄 state 세팅
-  const [clickedMt, setClickedMt] = useState("");
+  // 산 이름 클릭 시 페이지 이동해주기위해 navigate 선언
   const navigate = useNavigate();
 
-  // 자동완성에 뜬 산이름을 클릭할 경우 발생하는 클릭이벤트
-  function ClickMt() {}
+  // 검색창에서 아래/위 버튼 누르면 불 들어오게 해주면 좋을거같은데 일단 보류...
 
   return (
     <SearchBarDiv>
