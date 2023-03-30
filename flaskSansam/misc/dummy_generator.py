@@ -37,8 +37,9 @@ def create_dummy_user():
         user_nicknm = user_profile['name'][1:]
         user_age = int((datetime.now().date() - user_profile['birthdate']).days / 365)
         user_gender = user_profile['sex']
-        user_location = random.sample(['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북', '제주', '충남', '충북'], 1)[0]
-        print(user_location)
+        user_location = random.sample(
+            ['강원', '경기', '경남', '경북', '광주', '대구', '대전', '부산', '서울', '세종', '울산', '인천', '전남', '전북', '제주', '충남', '충북'], 1)[
+            0]
         user = user.append(
             {'USER_EMAIL': user_email, 'USER_NICKNM': user_nicknm, 'USER_AGE': user_age, 'USER_GENDER': user_gender,
              'USER_LOCATION': user_location}, ignore_index=True)
@@ -52,7 +53,12 @@ def create_dummy_review():
         review_date = fake.date_between_dates(date_start=datetime(2018, 1, 1), date_end=datetime(2023, 3, 30))
         review_time = random.randint(60, 600)
         review_rel_diff = random.choice('ENH')
-        review_content = fake.paragraph()
+        review_content = random.sample(
+            ['꽃이 너무 예뻐요!', '힘들지만 재밌어요!', '날씨가 더울 때는 가지 마세요... 지옥입니다.', '오르막길이 생각보다 힘들었어요', '편안한 산이예요. 함께 가실분 구해요~',
+             '다람쥐가 짱 많다.',
+             '삶이 힘들 때, 한번쯤 가면 좋은 산', '시원한 바람과 함께 타기 좋은 산!', '행복한 산행이였습니다.', '자연과 함께 할 수 있는 산.', None,
+             '너무 힘들었어요. 정말 쉽지 않네요...',
+             '진흙이 많아요... 신발 조심하세요 ㅠㅠ', '정상은 생각보다 바람이 많이 불어서 추웠다.', '자연과 하나되는 산행!', '산삶 덕분에 산행이 즐거워요 산삶 최고!'], 1)[0]
 
         # review_date의 형식을 datetime.date에서 timestamp형식으로 변환
         review_date = datetime.combine(review_date, datetime.min.time())
