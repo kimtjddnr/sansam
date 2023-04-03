@@ -17,7 +17,7 @@ app.database = database
 
 
 def get_email_response(access_token, refresh_token):
-    url = 'https://j8d205.p.ssafy.io/api/user/email'
+    url = 'http://172.17.0.1:5000/user/email'
     headers = {'X-ACCESS-TOKEN': access_token, 'X-REFRESH-TOKEN': refresh_token}
     response = requests.get(url, headers=headers)
 
@@ -60,7 +60,7 @@ def get_course_by_age_and_gender():
         reviews = conn.execute(text(f"""
         SELECT * 
         FROM `REVIEW`
-        WHERE `USER_NO` = (SELECT `USER_NO`
+        WHERE `USER_NO` IN (SELECT `USER_NO`
                             FROM `USER`
                             WHERE `USER_AGE` BETWEEN {user_age} AND {user_age+9}
                             AND `USER_GENDER` = '{user_gender}')
@@ -525,4 +525,4 @@ def get_course_recommend_hard():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5001)
+    app.run(debug=False, host="0.0.0.0", port=5001)

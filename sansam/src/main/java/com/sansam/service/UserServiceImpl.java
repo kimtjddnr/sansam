@@ -42,10 +42,10 @@ public class UserServiceImpl implements UserService {
             token = new Token();
             token.createToken(userNo, user.getUserEmail(), refreshToken);
             tokenRepository.save(token);
+        } else {
+            token.updateRefreshToken(refreshToken);
+            tokenRepository.save(token);
         }
-
-        token.updateRefreshToken(refreshToken);
-        tokenRepository.save(token);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void removeFavorite(int userNo, FavoriteRequest favoriteRequest) {
+    public void deleteFavorite(int userNo, FavoriteRequest favoriteRequest) {
         favoriteRepository.deleteByUserNoAndCourseNo(userNo, favoriteRequest.getCourseNo());
     }
 
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
         List<Review> reviews = reviewRepository.findAllByUserNo(user.getUserNo());
         for (Review review : reviews) {
             CourseResponse courseResponse = courseService.getCourseDetails(review.getCourseNo());
-            reviewList.add(new ReviewCourseResponse(courseResponse.getCourseNo(), courseResponse.getCourseMtNm(), courseResponse.getCourseMtCd(), courseResponse.getCourseMtNo(), courseResponse.getCourseXCoords(), courseResponse.getCourseYCoords(), courseResponse.getCourseElevDiff(), courseResponse.getCourseUptime(), courseResponse.getCourseDowntime(), courseResponse.getCourseLength(), courseResponse.getCourseLocation(), courseResponse.getCourseAddress(), review.getReviewDate(), review.getReviewTime(), review.getReviewContent()));
+            reviewList.add(new ReviewCourseResponse(courseResponse.getCourseNo(), courseResponse.getCourseMtNm(), courseResponse.getCourseMtCd(), courseResponse.getCourseMtNo(), courseResponse.getCourseXCoords(), courseResponse.getCourseYCoords(), courseResponse.getCourseElevDiff(), courseResponse.getCourseUptime(), courseResponse.getCourseDowntime(), courseResponse.getCourseLength(), courseResponse.getCourseLocation(), courseResponse.getCourseAddress(), review.getReviewDate(), review.getReviewTime(), review.getReviewRelDiff(), review.getReviewContent()));
         }
 
         return new ReviewListResponse(reviewList);
@@ -142,5 +142,23 @@ public class UserServiceImpl implements UserService {
         }
         System.out.println(cntE+" "+cntN+" "+cntH);
         return false;
+
+    @Override
+    public UserInfoResponse getUserInfo(String userEmail) {
+        User user = userRepository.findByUserEmail(userEmail);
+
+        return new UserInfoResponse(user.getUserEmail(), user.getUserNicknm(), user.getUserAge(), user.getUserGender(), user.getUserLocation());
+    }
+
+    @Override
+    public Boolean isCourseInFavorite(String userEmail, int courseNo) {
+        User user = userRepository.findByUserEmail(userEmail);
+        Favorite favorite = favoriteRepository.findByUserNoAndCourseNo(user.getUserNo(), courseNo);
+
+        if (favorite != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

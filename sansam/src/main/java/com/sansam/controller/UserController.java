@@ -4,10 +4,7 @@ import com.sansam.config.jwt.JwtProvider;
 import com.sansam.data.entity.User;
 import com.sansam.data.repository.UserRepository;
 import com.sansam.dto.request.*;
-import com.sansam.dto.response.EmailResponse;
-import com.sansam.dto.response.FavoriteListResponse;
-import com.sansam.dto.response.ReviewListResponse;
-import com.sansam.dto.response.SignUpResponse;
+import com.sansam.dto.response.*;
 import com.sansam.service.UserServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -28,7 +25,7 @@ public class UserController {
 
     @ApiOperation(
 			value = "카카오 OAuth 회원가입",
-			notes = "회원가입이 성공적으로 이루어지면 해당 회원의 accessToken과 refreshToken을 반환하고, 실패하면 Fail을 출력한다.")
+			notes = "회원가입이 성공적으로 이루어지면 해당 회원의 accessToken과 refreshToken을 반환하고, 실패하면 Fail message를 출력한다.")
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequest signUpRequest) {
         try {
@@ -44,26 +41,26 @@ public class UserController {
             signUpResponse.setRefreshToken(refreshToken);
             return new ResponseEntity<>(signUpResponse, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Failed sign up.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiOperation(
 			value = "로그아웃",
-			notes = "로그아웃 과정에서 refreshToken을 만료시키고 성공하면 Success를, 실패 시 Fail을 반환한다.")
+			notes = "로그아웃 과정에서 refreshToken을 만료시키고 성공하면 Success를, 실패 시 Fail message를 반환한다.")
     @PostMapping("/signout")
     public ResponseEntity<String> signOut(@RequestBody SignOutRequest signOutRequest) {
         try {
             userService.signOut(signOutRequest.getRefreshToken());
             return new ResponseEntity<>("Success", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Failed sign out.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiOperation(
 			value = "찜 목록",
-			notes = "해당 유저의 찜 목록을 조회하고 성공하면 찜 목록을, 실패하면 Fail을 반환한다.")
+			notes = "해당 유저의 찜 목록을 조회하고 성공하면 찜 목록을, 실패하면 Fail message를 반환한다.")
     @GetMapping("/favorite")
     public ResponseEntity<?> getFavoriteList(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response) {
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
@@ -78,13 +75,38 @@ public class UserController {
             FavoriteListResponse favoriteListResponse = userService.getFavoriteList(userEmail);
             return new ResponseEntity<>(favoriteListResponse, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Failed getting favorite list.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation(
+            value = "해당 코스 찜 여부 반환",
+            notes = "해당 유저가 해당 코스를 찜 했는지 여부를 조회하고, 찜을 했으면 True를, 찜을 하지 않았으면 False를 반환한다.")
+    @GetMapping("/favorite/is-enrolled/{courseNo}")
+    public ResponseEntity<?> isCourseInFavorite(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @PathVariable int courseNo) {
+        if (response.getHeader("X-ACCESS-TOKEN") != null) {
+            accessToken = response.getHeader("X-ACCESS-TOKEN");
+        } else {
+            response.setHeader("X-ACCESS-TOKEN", accessToken);
+        }
+
+        String userEmail = jwtProvider.getEmailFromToken(accessToken);
+
+        try {
+            Boolean isCourseInFavorite = userService.isCourseInFavorite(userEmail, courseNo);
+            if (isCourseInFavorite) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed checking favorite list enrollment.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiOperation(
             value = "찜 추가",
-            notes = "해당 유저의 찜 목록에 코스를 추가하고, 성공하면 Success를, 실패하면 Fail을 반환한다.")
+            notes = "해당 유저의 찜 목록에 코스를 추가하고, 성공하면 Success를, 실패하면 Fail message를 반환한다.")
     @PostMapping("/favorite/insert")
     public ResponseEntity<?> saveFavorite(@RequestHeader(value="X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody FavoriteRequest favoriteRequest) {
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
@@ -100,15 +122,15 @@ public class UserController {
             userService.saveFavorite(user.getUserNo(), favoriteRequest);
             return new ResponseEntity<>("Success", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Failed saving favorite.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiOperation(
 			value = "찜 목록에서 삭제",
-			notes = "코스 번호에 해당하는 코스를 찜 목록에서 삭제하고, 성공하면 찜 목록을, 실패하면 Fail을 반환한다.")
+			notes = "코스 번호에 해당하는 코스를 찜 목록에서 삭제하고, 성공하면 찜 목록을, 실패하면 Fail message를 반환한다.")
     @DeleteMapping("/favorite/delete")
-    public ResponseEntity<?> removeFavorite(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody FavoriteRequest favoriteRequest) {
+    public ResponseEntity<?> deleteFavorite(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody FavoriteRequest favoriteRequest) {
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
             accessToken = response.getHeader("X-ACCESS-TOKEN");
         } else {
@@ -119,16 +141,16 @@ public class UserController {
         User user = userRepository.findByUserEmail(userEmail);
 
         try {
-            userService.removeFavorite(user.getUserNo(), favoriteRequest);
+            userService.deleteFavorite(user.getUserNo(), favoriteRequest);
             return new ResponseEntity<>("Success", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Failed deleting favorite.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiOperation(
 			value = "리뷰 목록",
-			notes = "해당 유저의 리뷰 목록을 조회하고 성공하면 찜 목록을, 실패하면 Fail을 반환한다.")
+			notes = "해당 유저의 리뷰 목록을 조회하고 성공하면 찜 목록을, 실패하면 Fail message를 반환한다.")
     @GetMapping("/review")
     public ResponseEntity<?> getReviewList(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response) {
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
@@ -145,13 +167,13 @@ public class UserController {
             ReviewListResponse reviewListResponse = userService.getReviewList(userEmail);
             return new ResponseEntity<>(reviewListResponse, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Failed getting review list.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiOperation(
             value = "리뷰 추가",
-            notes = "해당 유저의 리뷰 목록에 리뷰를 추가하고, 성공하면 Success를, 실패하면 Fail을 반환한다.")
+            notes = "해당 유저의 리뷰 목록에 리뷰를 추가하고, 성공하면 Success를, 실패하면 Fail message를 반환한다.")
     @PostMapping("/review/insert")
     public ResponseEntity<?> saveReview(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @RequestBody SaveReviewRequest saveReviewRequest) {
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
@@ -167,13 +189,13 @@ public class UserController {
             userService.saveReview(user.getUserNo(), saveReviewRequest);
             return new ResponseEntity<>("Success", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Failed saving review.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiOperation(
             value = "리뷰 수정",
-            notes = "해당 유저의 해당 코스 리뷰를 수정하고, 성공하면 Success를, 실패하면 Fail을 반환한다.")
+            notes = "해당 유저의 해당 코스 리뷰를 수정하고, 성공하면 Success를, 실패하면 Fail message를 반환한다.")
     @PutMapping("/review/update/{courseNo}")
     public ResponseEntity<String> updateReview(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @PathVariable int courseNo, @RequestBody UpdateReviewRequest updateReviewRequest) {
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
@@ -189,13 +211,13 @@ public class UserController {
             userService.updateReview(user.getUserNo(), courseNo, updateReviewRequest);
             return new ResponseEntity<>("Success", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Failed updating review.", HttpStatus.BAD_REQUEST);
         }
     }
 
     @ApiOperation(
             value = "리뷰 삭제",
-            notes = "해당 유저의 해당 코스 리뷰를 삭제하고, 성공하면 Success를, 실패하면 Fail을 반환한다.")
+            notes = "해당 유저의 해당 코스 리뷰를 삭제하고, 성공하면 Success를, 실패하면 Fail message를 반환한다.")
     @DeleteMapping("/review/delete/{courseNo}")
     public ResponseEntity<String> deleteReview(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response, @PathVariable int courseNo) {
         if (response.getHeader("X-ACCESS-TOKEN") != null) {
@@ -211,7 +233,7 @@ public class UserController {
             userService.deleteReview(user.getUserNo(), courseNo);
             return new ResponseEntity<>("Success", HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Failed deleting review.", HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -252,7 +274,29 @@ public class UserController {
                 return new ResponseEntity<>(false, HttpStatus.OK);
             }
         } catch (Exception e) {
-                return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>("Failed checking whether course recommendation by difficulty is possible.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation()
+            value = "유저 정보 반환",
+            notes = "접속 중인 유저의 정보를 조회하고, 성공 시 유저 정보를 반환하고, 실패 시 Fail message를 반환한다.")
+    @GetMapping("/info")
+    public ResponseEntity<?> getUserInfo(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response) {
+        if (response.getHeader("X-ACCESS-TOKEN") != null) {
+            accessToken = response.getHeader("X-ACCESS-TOKEN");
+        } else {
+            response.setHeader("X-ACCESS-TOKEN", accessToken);
+        }
+
+        String userEmail = jwtProvider.getEmailFromToken(accessToken);
+        User user = userRepository.findByUserEmail(userEmail);
+
+        try {
+            UserInfoResponse userInfoResponse = userService.getUserInfo(userEmail);
+            return new ResponseEntity<>(userInfoResponse, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed getting user info.", HttpStatus.BAD_REQUEST);
         }
     }
 }
