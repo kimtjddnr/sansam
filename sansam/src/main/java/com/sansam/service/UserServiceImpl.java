@@ -117,4 +117,30 @@ public class UserServiceImpl implements UserService {
         Review review = reviewRepository.findByUserNoAndCourseNo(userNo, courseNo);
         reviewRepository.delete(review);
     }
+
+    @Override
+    public Boolean isRecommendable(int userNo) {
+        List<Review> reviewList = reviewRepository.findAllByUserNo(userNo);
+        int cntE = 0;
+        int cntN = 0;
+        int cntH = 0;
+        for (Review review: reviewList) {
+            switch (review.getReviewRelDiff()) {
+                case 'E':
+                    cntE++;
+                    break;
+                case 'N':
+                    cntN++;
+                    break;
+                default:
+                    cntH++;
+                    break;
+            }
+            if (cntE != 0 & cntN != 0 & cntH != 0) {
+                return true;
+            }
+        }
+        System.out.println(cntE+" "+cntN+" "+cntH);
+        return false;
+    }
 }

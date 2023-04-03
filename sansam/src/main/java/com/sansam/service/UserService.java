@@ -17,4 +17,5 @@ public interface UserService {
     void saveReview(int userNo, SaveReviewRequest saveReviewRequest);
     void updateReview(int userNo, int courseNo, UpdateReviewRequest updateReviewRequest);
     void deleteReview(int userNo, int courseNo);
+    Boolean isRecommendable(int userNo);
 }

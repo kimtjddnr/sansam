@@ -230,4 +230,29 @@ public class UserController {
         EmailResponse emailResponse = new EmailResponse(userEmail);
         return new ResponseEntity<>(emailResponse, HttpStatus.OK);
     }
+
+    @ApiOperation(
+            value = "난이도별 코스 추천 가능 여부 반환",
+            notes = "난이도별 코스 추천 가능 여부를 조회하고, 가능하면 True를, 불가능하면 False를, 조회 실패 시 Fail을 반환한다.")
+    @GetMapping("/main/is-recommendable")
+    public ResponseEntity<?> isRecommendable(@RequestHeader(value = "X-ACCESS-TOKEN") String accessToken, HttpServletResponse response) {
+        if (response.getHeader("X-ACCESS-TOKEN") != null) {
+            accessToken = response.getHeader("X-ACCESS-TOKEN");
+        } else {
+            response.setHeader("X-ACCESS-TOKEN", accessToken);
+        }
+
+        String userEmail = jwtProvider.getEmailFromToken(accessToken);
+        User user = userRepository.findByUserEmail(userEmail);
+
+        try {
+            if (userService.isRecommendable(user.getUserNo())) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(false, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+                return new ResponseEntity<>("Fail", HttpStatus.BAD_REQUEST);
+        }
+    }
 }
