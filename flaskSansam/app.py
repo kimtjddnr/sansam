@@ -17,7 +17,7 @@ app.database = database
 
 
 def get_email_response(access_token, refresh_token):
-    url = 'http://localhost:5000/user/email'
+    url = 'http://172.17.0.1:5000/user/email'
     headers = {'X-ACCESS-TOKEN': access_token, 'X-REFRESH-TOKEN': refresh_token}
     response = requests.get(url, headers=headers)
 
@@ -221,44 +221,38 @@ def get_course_recommend_easy():
 
     with database.connect() as conn:
         review_easy = conn.execute(text(f"""
-            SELECT COURSE_ELEV_DIFF, COURSE_UPTIME, COURSE_DOWNTIME, COURSE_LENGTH
-            FROM COURSE
-            WHERE COURSE_NO = (SELECT COURSE_NO
-                                FROM REVIEW
-                                WHERE REVIEW_REL_DIFF = 'E'
-                                AND USER_NO = (SELECT USER_NO
-                                                FROM USER
-                                                WHERE USER_EMAIL = '{user_email}')
-                                ORDER BY REVIEW_DATE DESC
-                                LIMIT 1)
+            SELECT c.COURSE_ELEV_DIFF, c.COURSE_UPTIME, c.COURSE_DOWNTIME, c.COURSE_LENGTH
+            FROM COURSE c
+            INNER JOIN REVIEW r ON c.COURSE_NO = r.COURSE_NO
+            INNER JOIN USER u ON r.USER_NO = u.USER_NO
+            WHERE r.REVIEW_REL_DIFF = 'E'
+            AND u.USER_EMAIL = '{user_email}'
+            ORDER BY r.REVIEW_DATE DESC
+            LIMIT 1
         """)).mappings().one()
 
     with database.connect() as conn:
         review_normal = conn.execute(text(f"""
-            SELECT COURSE_ELEV_DIFF, COURSE_UPTIME, COURSE_DOWNTIME, COURSE_LENGTH
-            FROM COURSE
-            WHERE COURSE_NO = (SELECT COURSE_NO
-                                FROM REVIEW
-                                WHERE REVIEW_REL_DIFF = 'N'
-                                AND USER_NO = (SELECT USER_NO
-                                                FROM USER
-                                                WHERE USER_EMAIL = '{user_email}')
-                                ORDER BY REVIEW_DATE DESC
-                                LIMIT 1)
+            SELECT c.COURSE_ELEV_DIFF, c.COURSE_UPTIME, c.COURSE_DOWNTIME, c.COURSE_LENGTH
+            FROM COURSE c
+            INNER JOIN REVIEW r ON c.COURSE_NO = r.COURSE_NO
+            INNER JOIN USER u ON r.USER_NO = u.USER_NO
+            WHERE r.REVIEW_REL_DIFF = 'N'
+            AND u.USER_EMAIL = '{user_email}'
+            ORDER BY r.REVIEW_DATE DESC
+            LIMIT 1
         """)).mappings().one()
 
     with database.connect() as conn:
         review_hard = conn.execute(text(f"""
-            SELECT COURSE_ELEV_DIFF, COURSE_UPTIME, COURSE_DOWNTIME, COURSE_LENGTH
-            FROM COURSE
-            WHERE COURSE_NO = (SELECT COURSE_NO
-                                FROM REVIEW
-                                WHERE REVIEW_REL_DIFF = 'H'
-                                AND USER_NO = (SELECT USER_NO
-                                                FROM USER
-                                                WHERE USER_EMAIL = '{user_email}')
-                                ORDER BY REVIEW_DATE DESC
-                                LIMIT 1)
+            SELECT c.COURSE_ELEV_DIFF, c.COURSE_UPTIME, c.COURSE_DOWNTIME, c.COURSE_LENGTH
+            FROM COURSE c
+            INNER JOIN REVIEW r ON c.COURSE_NO = r.COURSE_NO
+            INNER JOIN USER u ON r.USER_NO = u.USER_NO
+            WHERE r.REVIEW_REL_DIFF = 'H'
+            AND u.USER_EMAIL = '{user_email}'
+            ORDER BY r.REVIEW_DATE DESC
+            LIMIT 1
         """)).mappings().one()
 
     centroid_easy = np.array([float(review_easy['COURSE_ELEV_DIFF']), review_easy['COURSE_UPTIME'], review_easy['COURSE_DOWNTIME'], float(review_easy['COURSE_LENGTH'])])
@@ -329,44 +323,38 @@ def get_course_recommend_normal():
 
     with database.connect() as conn:
         review_easy = conn.execute(text(f"""
-            SELECT COURSE_ELEV_DIFF, COURSE_UPTIME, COURSE_DOWNTIME, COURSE_LENGTH
-            FROM COURSE
-            WHERE COURSE_NO = (SELECT COURSE_NO
-                                FROM REVIEW
-                                WHERE REVIEW_REL_DIFF = 'E'
-                                AND USER_NO = (SELECT USER_NO
-                                                FROM USER
-                                                WHERE USER_EMAIL = '{user_email}')
-                                ORDER BY REVIEW_DATE DESC
-                                LIMIT 1)
+            SELECT c.COURSE_ELEV_DIFF, c.COURSE_UPTIME, c.COURSE_DOWNTIME, c.COURSE_LENGTH
+            FROM COURSE c
+            INNER JOIN REVIEW r ON c.COURSE_NO = r.COURSE_NO
+            INNER JOIN USER u ON r.USER_NO = u.USER_NO
+            WHERE r.REVIEW_REL_DIFF = 'E'
+            AND u.USER_EMAIL = '{user_email}'
+            ORDER BY r.REVIEW_DATE DESC
+            LIMIT 1
         """)).mappings().one()
 
     with database.connect() as conn:
         review_normal = conn.execute(text(f"""
-            SELECT COURSE_ELEV_DIFF, COURSE_UPTIME, COURSE_DOWNTIME, COURSE_LENGTH
-            FROM COURSE
-            WHERE COURSE_NO = (SELECT COURSE_NO
-                                FROM REVIEW
-                                WHERE REVIEW_REL_DIFF = 'N'
-                                AND USER_NO = (SELECT USER_NO
-                                                FROM USER
-                                                WHERE USER_EMAIL = '{user_email}')
-                                ORDER BY REVIEW_DATE DESC
-                                LIMIT 1)
+            SELECT c.COURSE_ELEV_DIFF, c.COURSE_UPTIME, c.COURSE_DOWNTIME, c.COURSE_LENGTH
+            FROM COURSE c
+            INNER JOIN REVIEW r ON c.COURSE_NO = r.COURSE_NO
+            INNER JOIN USER u ON r.USER_NO = u.USER_NO
+            WHERE r.REVIEW_REL_DIFF = 'N'
+            AND u.USER_EMAIL = '{user_email}'
+            ORDER BY r.REVIEW_DATE DESC
+            LIMIT 1
         """)).mappings().one()
 
     with database.connect() as conn:
         review_hard = conn.execute(text(f"""
-            SELECT COURSE_ELEV_DIFF, COURSE_UPTIME, COURSE_DOWNTIME, COURSE_LENGTH
-            FROM COURSE
-            WHERE COURSE_NO = (SELECT COURSE_NO
-                                FROM REVIEW
-                                WHERE REVIEW_REL_DIFF = 'H'
-                                AND USER_NO = (SELECT USER_NO
-                                                FROM USER
-                                                WHERE USER_EMAIL = '{user_email}')
-                                ORDER BY REVIEW_DATE DESC
-                                LIMIT 1)
+            SELECT c.COURSE_ELEV_DIFF, c.COURSE_UPTIME, c.COURSE_DOWNTIME, c.COURSE_LENGTH
+            FROM COURSE c
+            INNER JOIN REVIEW r ON c.COURSE_NO = r.COURSE_NO
+            INNER JOIN USER u ON r.USER_NO = u.USER_NO
+            WHERE r.REVIEW_REL_DIFF = 'H'
+            AND u.USER_EMAIL = '{user_email}'
+            ORDER BY r.REVIEW_DATE DESC
+            LIMIT 1
         """)).mappings().one()
 
     centroid_easy = np.array([float(review_easy['COURSE_ELEV_DIFF']), review_easy['COURSE_UPTIME'], review_easy['COURSE_DOWNTIME'], float(review_easy['COURSE_LENGTH'])])
@@ -429,44 +417,38 @@ def get_course_recommend_hard():
 
     with database.connect() as conn:
         review_easy = conn.execute(text(f"""
-            SELECT COURSE_ELEV_DIFF, COURSE_UPTIME, COURSE_DOWNTIME, COURSE_LENGTH
-            FROM COURSE
-            WHERE COURSE_NO = (SELECT COURSE_NO
-                                FROM REVIEW
-                                WHERE REVIEW_REL_DIFF = 'E'
-                                AND USER_NO = (SELECT USER_NO
-                                                FROM USER
-                                                WHERE USER_EMAIL = '{user_email}')
-                                ORDER BY REVIEW_DATE DESC
-                                LIMIT 1)
+            SELECT c.COURSE_ELEV_DIFF, c.COURSE_UPTIME, c.COURSE_DOWNTIME, c.COURSE_LENGTH
+            FROM COURSE c
+            INNER JOIN REVIEW r ON c.COURSE_NO = r.COURSE_NO
+            INNER JOIN USER u ON r.USER_NO = u.USER_NO
+            WHERE r.REVIEW_REL_DIFF = 'E'
+            AND u.USER_EMAIL = '{user_email}'
+            ORDER BY r.REVIEW_DATE DESC
+            LIMIT 1
         """)).mappings().one()
 
     with database.connect() as conn:
         review_normal = conn.execute(text(f"""
-            SELECT COURSE_ELEV_DIFF, COURSE_UPTIME, COURSE_DOWNTIME, COURSE_LENGTH
-            FROM COURSE
-            WHERE COURSE_NO = (SELECT COURSE_NO
-                                FROM REVIEW
-                                WHERE REVIEW_REL_DIFF = 'N'
-                                AND USER_NO = (SELECT USER_NO
-                                                FROM USER
-                                                WHERE USER_EMAIL = '{user_email}')
-                                ORDER BY REVIEW_DATE DESC
-                                LIMIT 1)
+            SELECT c.COURSE_ELEV_DIFF, c.COURSE_UPTIME, c.COURSE_DOWNTIME, c.COURSE_LENGTH
+            FROM COURSE c
+            INNER JOIN REVIEW r ON c.COURSE_NO = r.COURSE_NO
+            INNER JOIN USER u ON r.USER_NO = u.USER_NO
+            WHERE r.REVIEW_REL_DIFF = 'N'
+            AND u.USER_EMAIL = '{user_email}'
+            ORDER BY r.REVIEW_DATE DESC
+            LIMIT 1
         """)).mappings().one()
 
     with database.connect() as conn:
         review_hard = conn.execute(text(f"""
-            SELECT COURSE_ELEV_DIFF, COURSE_UPTIME, COURSE_DOWNTIME, COURSE_LENGTH
-            FROM COURSE
-            WHERE COURSE_NO = (SELECT COURSE_NO
-                                FROM REVIEW
-                                WHERE REVIEW_REL_DIFF = 'H'
-                                AND USER_NO = (SELECT USER_NO
-                                                FROM USER
-                                                WHERE USER_EMAIL = '{user_email}')
-                                ORDER BY REVIEW_DATE DESC
-                                LIMIT 1)
+            SELECT c.COURSE_ELEV_DIFF, c.COURSE_UPTIME, c.COURSE_DOWNTIME, c.COURSE_LENGTH
+            FROM COURSE c
+            INNER JOIN REVIEW r ON c.COURSE_NO = r.COURSE_NO
+            INNER JOIN USER u ON r.USER_NO = u.USER_NO
+            WHERE r.REVIEW_REL_DIFF = 'H'
+            AND u.USER_EMAIL = '{user_email}'
+            ORDER BY r.REVIEW_DATE DESC
+            LIMIT 1
         """)).mappings().one()
 
     centroid_easy = np.array([float(review_easy['COURSE_ELEV_DIFF']), review_easy['COURSE_UPTIME'], review_easy['COURSE_DOWNTIME'], float(review_easy['COURSE_LENGTH'])])
@@ -516,4 +498,4 @@ def get_course_recommend_hard():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5001)
+    app.run(debug=False, host="0.0.0.0", port=5001)
