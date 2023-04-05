@@ -26,12 +26,12 @@ function Hiking() {
 
   const moveToPhotoPage = () => {
     if (window.confirm("사진을 찍을까요?")) {
-      navigate("/photo/", {});
+      navigate("/photo", {});
     }
   };
 
   const moveToReviewPage = () => {
-    navigate("/review/");
+    navigate("/review");
   };
 
   const startTime: number = useAppSelector((state) => state.course.timeInfo);
@@ -132,6 +132,7 @@ function Hiking() {
         ) : null}
       </StyledMap>
       <StyledH1>
+        {courseData.courseLocation}&nbsp;
         {courseData.courseMtNm}&nbsp;
         {courseData.courseMtNo}코스
       </StyledH1>
