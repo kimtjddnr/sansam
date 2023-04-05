@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 import HikingKakaomap from "./HikingKakaomap";
-import { useAppSelector, useAppDispatch } from "../../store/hooks";
+import { useAppSelector } from "../../store/hooks";
 import { courseActions, courseInfo } from "../../store/courseSlice";
 interface ILocation {
   latitude: number | null;
@@ -34,17 +34,17 @@ function Hiking() {
     navigate("/review/");
   };
 
+  const startTime: number = useAppSelector((state) => state.course.timeInfo);
+
   useEffect(() => {
     // window.location.reload();
+    console.log(startTime);
     try {
-      const stream = navigator.mediaDevices.getUserMedia({ video: false });
+      // const stream = navigator.mediaDevices.getUserMedia({ video: false });
       console.log("asdfdsf");
     } catch (err) {}
     handleStart();
   }, []);
-
-  const dispatch = useAppDispatch();
-  const startTime: number = useAppSelector((state) => state.course.timeInfo);
 
   function handleStart() {
     // console.log(startTime);
@@ -56,7 +56,6 @@ function Hiking() {
 
   function handleStop() {
     if (window.confirm("등산을 끝내시겠습니까?")) {
-      dispatch(courseActions.addTime(elapsedTime));
       moveToReviewPage();
       setIsRunning(false);
       window.clearInterval(intervalRef.current!);

@@ -38,7 +38,8 @@ function Review() {
     navigate("/mypage/myreview");
   };
 
-  const time: number = useAppSelector((state) => state.course.timeInfo);
+  const startTime: number = useAppSelector((state) => state.course.timeInfo);
+  const time = Date.now() - startTime;
 
   const [easy, setEasy] = useState(false);
   const [soso, setSoso] = useState(false);
