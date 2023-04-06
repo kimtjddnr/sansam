@@ -110,7 +110,7 @@ function CameraApp() {
         ref={videoRef}
         autoPlay
         playsInline
-        width={360}
+        width={380}
         height={300}
       ></video>
       <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
