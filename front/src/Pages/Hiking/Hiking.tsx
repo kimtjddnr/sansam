@@ -107,9 +107,6 @@ function Hiking() {
 
     return () => clearInterval(intervalId);
   }, []);
-  // console.log(latitudeList, longitudeList);
-
-  // }
 
   return (
     <StyledDiv>
