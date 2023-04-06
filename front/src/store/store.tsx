@@ -10,15 +10,12 @@ import sessionStorage from "redux-persist/es/storage/session";
 import { persistReducer } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
 
-// interface persistType {
-//   key: string;
-//   sessionStorage: any;
-// }
-
-const persistConfig: {
+interface persistType {
   key: string;
   sessionStorage: any;
-} = {
+}
+
+const persistConfig: persistType = {
   key: "root",
   sessionStorage,
   // whitelist: ['user']
