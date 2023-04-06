@@ -65,7 +65,7 @@ function FilterRg() {
         }
       )
       .then((res) => {
-        console.log('axios에 들어가는 값', searchRg)
+        // console.log('axios에 들어가는 값', searchRg)
         setCourseList(res.data.COURSE_LIST);
       })
       .catch((err) => console.log(err));
@@ -173,7 +173,7 @@ function FilterRg() {
       coordX: location.latitude,
       coordY: location.longitude
     })
-    console.log('handleCoords')
+    // console.log('handleCoords')
   }
 
   // handleCoords 동기처리
@@ -230,7 +230,7 @@ function FilterRg() {
     };
 
     navigator.geolocation.getCurrentPosition(success, error);
-    console.log("위치 받아옴");
+    // console.log("위치 받아옴");
     // })
   }
 
@@ -275,8 +275,8 @@ function FilterRg() {
       if (searchRg.courseLocation === "현재 위치") {
         alert("지역을 선택해주세요")
       } else {
-        console.log(searchRg)
-        console.log('axios')
+        // console.log(searchRg)
+        // console.log('axios')
         doAxios()
       }
     } else if (locBtn === 1) {
@@ -290,8 +290,8 @@ function FilterRg() {
       if (searchRg.courseRadius === 0) {
         alert("반경을 설정해주세요")
       } else {
-        console.log(searchRg)
-        console.log('axios')
+        // console.log(searchRg)
+        // console.log('axios')
         doAxios()
       }
     }
