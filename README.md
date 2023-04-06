@@ -34,47 +34,52 @@ __[산삶 체험하기 링크](https://j8d205.p.ssafy.io/)__
 ## 산삶 이용 방법
 
 #### 시작화면
-![시작화면]()
-![top 10 추천]()
-![무작위 코스 추천]()
+![시작화면](./uploads/imgs/starting_page.gif)  
 
 #### 로그인
-![로그인]()
+![로그인](./uploads/imgs/login.png)
 
 #### 메인페이지
-![메인화면]()
-![연령과 성별에 따른 추천]()
-![체감 난이도별 추천]()
+###### 초기화면
+![메인화면](./uploads/imgs/main.png)  
+###### 사용자의 연령과 성별에 따른 추천
+![연령과 성별에 따른 추천](./uploads/imgs/main_age_gender.png)  
+###### 사용자의 체감 난이도가 쉬움, 중간, 어려움에 해당하는 코스 추천
+![체감 난이도별 추천](./uploads/imgs/main_recommend.png)
+###### Top 10 등산 코스
 ![top 10 추천]()
-![무작위 코스 추천]()
 
 #### 산으로 추천받기
-![산으로 추천받기 화면-지리산]()
+![산으로 추천받기 화면-지리산](./uploads/imgs/filter_mountain.png)
 
 #### 지역으로 추천받기
 ![지역으로 추천받기 화면-강원]()
 
 #### 코스 세부 화면
-![코스 세부 화면-지리산 1번코스]()
-![코스 세부 화면-지리산 1번코스-찜버튼On]()
+###### 찜 하기 전
+![코스 세부 화면-지리산 1번코스](./uploads/imgs/course_detail.png)
+###### 찜한 후
+![코스 세부 화면-지리산 1번코스-찜버튼On](./uploads/imgs/course_detail_with_fav.png)
 
 #### 등산 중 화면
-![등산 중 화면-지리산 1번코스]()
+![등산 중 화면-지리산 1번코스](./uploads/imgs/hiking.png)
 
 #### 등산 중 사진 촬영 화면
-![등산 중 사진 촬영 화면]()
+![등산 중 사진 촬영 화면](./uploads/imgs/hiking_camera.png)
 
 #### 등산 완료 후 기록 화면
-![등산 완료 후 기록 화면]()
+![등산 완료 후 기록 화면](./uploads/imgs/hiking_review.png)
 
 #### 마이페이지
-![마이페이지-등산 기록]()
-![마이페이지-등산 찜 목록]()
-![마이페이지-등산 지도]()
+###### 등산 타임라인
+![마이페이지-등산 기록](./uploads/imgs/mypage_review_list.png)
+###### 찜 목록
+![마이페이지-등산 찜 목록](./uploads/imgs/mypage_favorite_list.png)
+###### 등산 지도
+![마이페이지-등산 지도](./uploads/imgs/mypage_climbed_map.png)
 
 ## 팀원 및 담당 파트
 - 김성욱(팀장/Back End)
-    - [수행 역할]
 - 김유홍(팀원/Front End)
 - 양동기(팀원/Back End)
 - 윤선영(팀원/Front End)
@@ -104,7 +109,7 @@ __[산삶 체험하기 링크](https://j8d205.p.ssafy.io/)__
 ![AWS EC2](https://img.shields.io/badge/Amazon&nbsp;EC2-FF9900?logo=AmazonEC2&logoColor=black)
 
 ## 시스템 아키텍쳐
-![아키텍쳐]()
+![아키텍쳐](./uploads/imgs/architecture.png)
 
 ## 기타 문서
 
@@ -114,10 +119,7 @@ __[산삶 체험하기 링크](https://j8d205.p.ssafy.io/)__
 ### API 명세서
 ![API 명세서](./uploads/imgs/api_specification.png)
 
-### 스케줄(간트차트)
-![간트차트]()
-
-### 협업툴
+## 협업툴
 - 형상 관리: ![GitLab](https://img.shields.io/badge/GitLab-FC6D26?logo=GitLab)
 - 이슈 관리: ![Jira](https://img.shields.io/badge/Jira-0052CC?logo=Jira)
 - 커뮤니케이션:
