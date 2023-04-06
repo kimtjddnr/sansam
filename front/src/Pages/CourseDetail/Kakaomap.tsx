@@ -54,6 +54,7 @@ function Kakaomap({ courseXCoords, courseYCoords }: Icoords) {
 
         polyline.setMap(map);
       }
+      console.log(linePath);
     };
 
     drawingLines(courseXCoords, courseYCoords, length);
