@@ -46,13 +46,13 @@ __[산삶 체험하기 링크](https://j8d205.p.ssafy.io/)__
 ###### 사용자의 체감 난이도가 쉬움, 중간, 어려움에 해당하는 코스 추천
 ![체감 난이도별 추천](./uploads/imgs/main_recommend.png)
 ###### Top 10 등산 코스
-![top 10 추천]()
+![top 10 추천](./uploads/imgs/main_topten.png)
 
 #### 산으로 추천받기
 ![산으로 추천받기 화면-지리산](./uploads/imgs/filter_mountain.png)
 
 #### 지역으로 추천받기
-![지역으로 추천받기 화면-강원]()
+![지역으로 추천받기 화면-서울](./uploads/imgs/filter_area.png)
 
 #### 코스 세부 화면
 ###### 찜 하기 전
